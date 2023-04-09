@@ -8,6 +8,8 @@ const xpdown = new Set();
 
 require('./conexion')
 
+const User = require("./Schema/user")
+
 client.commands = new Collection()
 
 const commandFolder = fs.readdirSync("./commands")
