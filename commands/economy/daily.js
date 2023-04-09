@@ -7,13 +7,15 @@ module.exports = {
   decription: "With this command u can your daily reward!",
   cooldown: 86400000,
   run: async (client, message, args) => {
-    if (await !us(message)) return error(message, "You are not registered yet!");
+
+    usExists = await us(message);
+    if (await !usExists) return error(message, 'You are not registered yet!');
+    usExists.cash = usExists.cash + 1000;
+    await usExists.save();
+
+
     const embed = new EmbedBuilder().setDescription(
       `You received ur daily reward!`
-    );
-    await User.findOneAndUpdate(
-      { userId: message.author.id },
-      { cash: data.cash + Number(1000) }
     );
     await message.channel.send({
       embeds: [embed],

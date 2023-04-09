@@ -17,6 +17,7 @@ require("./conexion");
 config();
 
 const User = require("./Schema/user");
+const Afk = require("./Schema/afk")
 
 client.commands = new Collection();
 
@@ -32,6 +33,18 @@ for (const folder of commandFolder) {
 }
 
 client.on("messageCreate", async (message) => {
+  if(await Afk.findOne({ userId: message.author.id })){
+    await Afk.findOneAndDelete({ userId: message.author.id })
+    message.channel.send({ content: `Welcome back ${message.author.tag}, ur AFK status has been removed.`})
+  }
+
+  if (message.mentions.members.first()) {
+    const at = await Afk.findOne({ userId: message.mentions.members.first().id })
+    if (!at) return;
+
+    message.channel.send(`**${message.mentions.users.first().username}** is found AFK!\n**Reason:** discord.gg/peru`)
+  }   
+
   const prefix = "6";
   if (!message.content.startsWith(prefix)) return;
   const args = message.content.slice(prefix.length).trim().split(/ + /);
@@ -86,6 +99,13 @@ client.on("messageCreate", async (message) => {
     message.channel.send({
       embeds: [embed],
     });
+  }
+  if(message.content == "7un"){
+    
+
+    await User.deleteOne({ userId: message.author.id })
+
+    message.channel.send({ content: 'oki'})
   }
 });
 
