@@ -73,10 +73,5 @@ client.on('messageCreate', async message => {
     }
 })
 
-<<<<<<< HEAD
-client.login("MTA5NDQ5NTYzNDI1MTMyMTQxNQ.GEadS5.VGapbVXG-msTrecq-kQZpKwZ0cx2W-n3zEBXzw")
-console.log(`Ready!`)
-=======
 client.login("")
-console.log("Ready!")
->>>>>>> 7f89db20095f8bb6c159ef134695be5509dc49f0
+console.log(`Ready!`)
