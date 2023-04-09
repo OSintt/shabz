@@ -43,10 +43,7 @@ client.on('messageCreate', async message => {
             embeds:[embed]
         })
     }
-    if(message.content == '7test'){
-        
-    }
 })
 
-client.login("MTA4MjAyNTAyOTA3MzY0MTQ3Mg.GC_J_U.iQbOuFW2VpnWTsYrkH8JXGDzXXlTEOkZuZFL6M")
+client.login("")
 console.log("Ready!")
