@@ -2,10 +2,16 @@ const { EmbedBuilder } = require("discord.js")
 const User = require('../../Schema/user')
 module.exports = {
     name: 'register',
-    decription: 'With command can u register!',
+    decription: 'With this command can u register!',
     run: async (client, message, args) => {
 
         const data = await User.findOne({ userId: message.author.id })
+        if(data) return message.reply({
+            embeds:[
+                new EmbedBuilder()
+                .setDescription("You're alredy register!")
+            ]
+        })
         if(!data){
             const nuevo = new User({
                 userId: message.author.id,

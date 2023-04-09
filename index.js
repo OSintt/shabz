@@ -1,6 +1,9 @@
 const { Client, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, SelectMenuBuilder, StringSelectMenuBuilder, Collection } = require('discord.js')
+const Discord = require("discord.js")
 const client = new Client({ intents: [3276799]})
 const fs = require("fs")
+const ms = require("ms")
+const Time = new Discord.Collection();
 
 require('./conexion')
 
@@ -26,8 +29,18 @@ client.on('messageCreate', async message => {
 
     const cmd = client.commands.get(command)
 
+    
     if(cmd) {
-        cmd.run(client, message, args)
+        if(cmd.cooldown){
+            if(Time.has(`${cmd.name}${message.author.id}`)) return message.channel.send(`You already did this! come back in ${ms(Time.get(`${cmd.name}${message.author.id}`) - Date.now(), {long: false})}`)
+            cmd.run(client, message, args)
+            Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown)
+            setTimeout(() => {
+                Time.delete(`${cmd.name}${message.author.id}`)
+            }, cmd.cooldown)
+        } else {
+            cmd.run(client, message, args)
+        }
     }
 
     if(message.content == '7hola'){
@@ -43,10 +56,7 @@ client.on('messageCreate', async message => {
             embeds:[embed]
         })
     }
-    if(message.content == '7test'){
-        
-    }
 })
 
-client.login("MTA4MjAyNTAyOTA3MzY0MTQ3Mg.GC_J_U.iQbOuFW2VpnWTsYrkH8JXGDzXXlTEOkZuZFL6M")
-console.log("Ready!")
+client.login("MTA5NDQ5NTYzNDI1MTMyMTQxNQ.GEadS5.VGapbVXG-msTrecq-kQZpKwZ0cx2W-n3zEBXzw")
+console.log(`Ready!`)
