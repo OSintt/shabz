@@ -4,6 +4,7 @@ const client = new Client({ intents: [3276799]})
 const fs = require("fs")
 const ms = require("ms")
 const Time = new Discord.Collection();
+const xpdown = new Set();
 
 require('./conexion')
 
@@ -42,6 +43,18 @@ client.on('messageCreate', async message => {
             cmd.run(client, message, args)
         }
     }
+
+    if(await User.findOne({ userId: message.author.id })) {
+        if (xpdown.has(message.author.id)) return;
+        const xplist = [15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 29, 30, 35]
+        const xprandom = Math.floor(Math.random() * xplist.length);
+        const asd = await User.findOne({ userId: message.author.id })
+        await User.findOneAndUpdate({ userId: message.author.id }, { xp: asd.xp + Number(xprandom) })
+            xpdown.add(message.author.id)
+        setTimeout(() => {
+          xpdown.delete(message.author.id)
+        }, 4000)
+      }
 
     if(message.content == '7hola'){
         const embed = new EmbedBuilder()

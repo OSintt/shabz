@@ -19,6 +19,7 @@ module.exports = {
 
         const workd = new EmbedBuilder()
         .setDescription(`You worked and earn **${random}** coins!`)
+        .setColor('#020202')
         await message.channel.send({
             embeds:[workd]
         })
