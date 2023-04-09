@@ -36,6 +36,13 @@ const UserSchema = new Schema({
     items: {
         type: Number,
         default: 0
+    },
+    afk: {
+        afk: {
+            type: Boolean,
+            default: false
+        },
+        reason: String
     }
 })
 module.exports = model('User', UserSchema)

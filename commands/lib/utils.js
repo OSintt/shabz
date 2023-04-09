@@ -7,9 +7,5 @@ const error = (message, msg) => {
   });
 };
 
-const us = async (message) => {
-  return await User.findOne({ userId: message.author.id });
-};
-
 const hershell = "793161028988960798";
-module.exports = { hershell, error, us };
+module.exports = { hershell, error };
