@@ -5,7 +5,7 @@ module.exports = {
   name: "profile",
   decription: "With command can see u profile",
   cooldown: 3000,
-  run: async (client, message, interaction, args) => {
+  run: async (client, message, args, usExists) => {
     const user = message.mentions.users.first() || message.author
     const data = await User.findOne({ userId: user.id });
     if (!data) return error(message, "Try 6register first!");

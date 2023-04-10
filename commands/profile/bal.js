@@ -4,7 +4,7 @@ const { error } = require("../lib/utils");
 module.exports = {
   name: "bal",
   decription: "You can see your bal",
-  run: async (client, message, interaction, args) => {
+  run: async (client, message, args, usExists) => {
     const user = message.mentions.members.first() || message.author;
     const data = await User.findOne({ userId: user.id });
     if (!data) return error(message, "Try 6register first!");

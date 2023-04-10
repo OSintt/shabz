@@ -6,14 +6,10 @@ module.exports = {
   name: "daily",
   decription: "With this command u can your daily reward!",
   cooldown: 86400000,
-  run: async (client, message, args) => {
-
-    usExists = await us(message);
-    if (await !usExists) return error(message, 'You are not registered yet!');
+  auth: true,
+  run: async (client, message, args, usExists) => {
     usExists.cash = usExists.cash + 1000;
     await usExists.save();
-
-
     const embed = new EmbedBuilder().setDescription(
       `You received ur daily reward!`
     );

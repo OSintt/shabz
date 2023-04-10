@@ -1,14 +1,12 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-let { error, us } = require("../lib/utils");
 
 module.exports = {
   name: "work",
   decription: "With this command u can work!",
+  auth: true,
   cooldown: 3000 * 100,
-  run: async (client, message, args) => {
-    usExists = await us(message);
-    if (!usExists) return error(message, "You are not registed yet!");
+  run: async (client, message, args, usExists) => {
     const random = Math.floor(Math.random() * 500) + 100;
     const embed = new EmbedBuilder()
       .setDescription(`You worked and earn **${random}** coins!`)
