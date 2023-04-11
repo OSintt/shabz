@@ -12,6 +12,7 @@ require("./conexion");
 config();
 
 const User = require("./Schema/user");
+const { error } = require("console");
 
 client.commands = new Collection();
 

@@ -3,7 +3,7 @@ const User = require("../../Schema/user");
 const { error, us} = require("../lib/utils");
 module.exports = {
   name: "avatar-set",
-  decription: "You forgot to put u avatar!",
+  description: "You forgot to put u avatar!",
   cooldown: 2000,
   auth: true,
   run: async (client, message, args, usExists) => {

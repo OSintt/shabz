@@ -45,6 +45,12 @@ const UserSchema = new Schema({
         type: Number,
         default: 0
     },
+    kiss: {
+        userId: {
+            type: String
+        },
+        kisses: Number
+    },
     afk: {
         afk: {
             type: Boolean,

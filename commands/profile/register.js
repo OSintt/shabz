@@ -3,7 +3,7 @@ const User = require("../../Schema/user");
 const { error } = require("../lib/utils");
 module.exports = {
   name: "register",
-  decription: "With this command can u register!",
+  description: "With this command can u register!",
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
     if (usExists) return error(message, "You're alredy registered!");

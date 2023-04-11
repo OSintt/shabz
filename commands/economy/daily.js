@@ -4,7 +4,7 @@ const { error, us } = require("../lib/utils");
 
 module.exports = {
   name: "daily",
-  decription: "With this command u can your daily reward!",
+  description: "With this command u can your daily reward!",
   cooldown: 86400000,
   auth: true,
   run: async (client, message, args, usExists) => {

@@ -3,8 +3,7 @@ const User = require("../../Schema/user");
 const { error, us} = require("../lib/utils");
 module.exports = {
   name: "emoji-set",
-  decription: "You forgot to put u emote!",
-  cooldown: 2000,
+  description: "You forgot to put u emote!",
   auth: true,
   run: async (client, message, args, usExists) => {
 

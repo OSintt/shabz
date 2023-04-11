@@ -1,10 +1,10 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
 const { error } = require("../lib/utils");
+const { trusted } = require("mongoose");
 module.exports = {
   name: "profile",
-  decription: "With command can see u profile",
-  cooldown: 3000,
+  description: "With command can see u profile",
   run: async (client, message, args, usExists) => {
     const user = message.mentions.users.first() || message.author
     const data = await User.findOne({ userId: user.id });
@@ -43,6 +43,16 @@ module.exports = {
           inline: true,
         },
         {
+          name: `${data.emoji} Hugs`,
+          value: `\`${data.hugs}\``,
+          inline: true
+        },
+        {
+          name: `${data.emoji} Pats`,
+          value: `\`${data.pats}\``,
+          inline: true
+        },
+        {
           name: `${data.emoji} Married`,
           value: `\`${marry ? marry.nick : "Single!"}\``,
           inline: true,
@@ -50,7 +60,6 @@ module.exports = {
         {
           name: `Biografia`,
           value: `\`\`\`${data.bio}\`\`\``,
-          inline: true,
         }
       );
 

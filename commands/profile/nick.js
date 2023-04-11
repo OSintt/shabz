@@ -3,8 +3,7 @@ const User = require("../../Schema/user");
 const { error, us} = require("../lib/utils");
 module.exports = {
   name: "nick-set",
-  decription: "You forgot to put u nicknamee",
-  cooldown: 3000,
+  description: "You forgot to put u nicknamee",
   auth: true,
   run: async (client, message, args, usExists) => {
 

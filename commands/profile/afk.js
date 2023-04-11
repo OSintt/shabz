@@ -3,7 +3,7 @@ const User = require("../../Schema/user");
 const { error, us } = require("../lib/utils");
 module.exports = {
   name: "afk",
-  decription: "With this command can u register!",
+  description: "With this command can u register!",
   auth: true,
   run: async (client, message, args, usExists) => {
     usExists.afk = {

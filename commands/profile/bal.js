@@ -3,19 +3,19 @@ const User = require("../../Schema/user");
 const { error } = require("../lib/utils");
 module.exports = {
   name: "bal",
-  decription: "You can see your bal",
-  run: async (client, message, args, usExists) => {
-    const user = message.mentions.members.first() || message.author;
-    const data = await User.findOne({ userId: user.id });
-    if (!data) return error(message, "Try 6register first!");
+  description: "You can see your bal",
+  run: async (client, message, args) => {
+    const usMention = message.mentions.users.first() || message.author;
+    const data = await User.findOne({ userId: usMention.id })
+    if (!data) return error(message, "Try 6register first!")
     const embed = new EmbedBuilder()
       .setAuthor({
-        name: user.tag,
-        iconUrl: user.displayAvatarURL({ dynamic: true }),
+        name: usMention.tag,
+        iconUrl: usMention.displayAvatarURL({ dynamic: true }),
       })
       .setThumbnail(data.avatar)
       .setDescription(
-        `**${user.username}**'re current bal is: \`${data.cash + data.bank}\``
+        `**${usMention.username}**'re current bal is: \`${data.cash + data.bank}\``
       )
       .setFields(
         {
