@@ -26,7 +26,7 @@ module.exports = {
         await usExists.save();
     }
     if(probabilite < 57){
-        usExists.cash = 0;
+        usExists.cash = usExists.cash - Number(rob);
         await usExists.save();
         return error(message, `You tried robbed to **${usMention.username}** and lost \`${rob}\``)
     }

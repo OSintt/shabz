@@ -92,7 +92,7 @@ client.on("messageCreate", async (message) => {
         ],
       });
     return cmd.run(client, message, args, usExists);
-  }
+  } 
 });
 
 client.login(process.env.TOKEN);

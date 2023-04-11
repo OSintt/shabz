@@ -7,6 +7,9 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
 
+    var maxLen = 10
+
+    if(args.join(' ').length > maxLen) return error(message, 'Nope')
     if(!args.join(' ')) return error(message, 'You forgot to put u nicknamee')
     if(args.join(' ').includes('`')) return error(message, 'Pick ur nickname!')
 
@@ -49,6 +52,16 @@ module.exports = {
           inline: true,
         },
         {
+          name: `${usExists.emoji} Hugs`,
+          value: `\`${usExists.hugs}\``,
+          inline: true
+        },
+        {
+          name: `${usExists.emoji} Pats`,
+          value: `\`${usExists.pats}\``,
+          inline: true
+        },
+        {
           name: `${usExists.emoji} Married`,
           value: `\`${marry ? marry.nick : "Single!"}\``,
           inline: true,
@@ -56,7 +69,6 @@ module.exports = {
         {
           name: `Biografia`,
           value: `\`\`\`${usExists.bio}\`\`\``,
-          inline: true,
         }
       );
 

@@ -23,13 +23,14 @@ module.exports = {
         ]})
     }
     if(args[0] !== 'all') {
+        if(args.join('').includes('-')) return error(message, 'That is not a valid amount!')
         if(args.join('').includes('.')) return error(message, 'That is not a valid amount!')
         if(isNaN(args[0])) return error(message, 'That is not a valid amount!')
-        if(usExists.bank < 1) return error(message, "You've no money in your bank!")
-        if(args[0] > usExists.bank) return error(message, "You've no money in your bank!")
+        if(usExists.bank < 1) return error(message, "You've no money in your wallet!")
+        if(args[0] > usExists.bank) return error(message, "You've no money in your wallet!")
 
+        usExists.bank = usExists.bank - Number(args[0])
         usExists.cash = usExists.cash + Number(args[0]);
-        usExists.bank = usExists.bank - Number(args[0]);
         await usExists.save();
 
       const embed = new EmbedBuilder()

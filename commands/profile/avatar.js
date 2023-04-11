@@ -50,14 +50,23 @@ module.exports = {
           inline: true,
         },
         {
+          name: `${usExists.emoji} Hugs`,
+          value: `\`${usExists.hugs}\``,
+          inline: true
+        },
+        {
+          name: `${usExists.emoji} Pats`,
+          value: `\`${usExists.pats}\``,
+          inline: true
+        },
+        {
           name: `${usExists.emoji} Married`,
           value: `\`${marry ? marry.nick : "Single!"}\``,
           inline: true,
         },
         {
           name: `Biografia`,
-          value: `\`\`\`${usExists.bio}\`\`\``,
-          inline: true,
+          value: `\`\`\`${usExists.bio}\`\`\``  
         }
       );
 

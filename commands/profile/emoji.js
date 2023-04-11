@@ -26,26 +26,50 @@ module.exports = {
                 .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })})
                 .setThumbnail(message.author.displayAvatarURL({ dynamic: true}))
                 .setColor('#00ff00')
-                .setFields({
-                  name: `${usExists.emoji} Name`, value: `\`${usExists.nick}\``, inline: true
+                .setFields(
+                {
+                  name: `${usExists.emoji} Name`,
+                  value: `\`${usExists.nick}\``,
+                  inline: true
                 },
                 {
-                  name: `${usExists.emoji} Rep`, value: `\`${usExists.rep}\``, inline: true
+                  name: `${usExists.emoji} Rep`,
+                  value: `\`${usExists.rep}\``,
+                  inline: true
                 },
                 {
-                  name: `${usExists.emoji} Coins`, value: `\`${usExists.cash + usExists.bank}\``, inline: true
+                  name: `${usExists.emoji} Coins`,
+                  value: `\`${usExists.cash + usExists.bank}\``,
+                  inline: true
                 },
                 {
-                  name: `${usExists.emoji} Items`, value: `\`${usExists.items}\``, inline: true
+                  name: `${usExists.emoji} Items`,
+                  value: `\`${usExists.items}\``,
+                  inline: true
                 },
                 {
-                  name: `${usExists.emoji} Xp`, value: `\`${usExists.xp}\``, inline: true
+                  name: `${usExists.emoji} Xp`,
+                  value: `\`${usExists.xp}\``,
+                  inline: true
                 },
                 {
-                  name: `${usExists.emoji} Married`, value: `\`${marry ? marry.nick : "Single!"}\``, inline: true
+                  name: `${usExists.emoji} Hugs`,
+                  value: `\`${usExists.hugs}\``,
+                  inline: true
                 },
                 {
-                  name: `${usExists.emoji} Bio`, value: `\`\`\`${usExists.bio}\`\`\``, inline: true
+                  name: `${usExists.emoji} Pats`,
+                  value: `\`${usExists.pats}\``,
+                  inline: true
+                },
+                {
+                  name: `${usExists.emoji} Married`,
+                  value: `\`${marry ? marry.nick : "Single!"}\``,
+                  inline: true
+                },
+                {
+                  name: `${usExists.emoji} Bio`,
+                  value: `\`\`\`${usExists.bio}\`\`\``
                 })
                 .setTimestamp()
               ]})
