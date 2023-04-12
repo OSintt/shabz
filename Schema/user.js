@@ -25,6 +25,7 @@ const UserSchema = new Schema({
         type: Number,
         default: 0
     },
+    pija: Number,
     rep: {
         type: Number,
         default: 0

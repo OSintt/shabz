@@ -9,15 +9,8 @@ module.exports = {
 
     if(message.author.id !== hershell) return;
 
-    const usMention = message.mentions.users.first();
-    if(!usMention) return error(message, 'You forgot the mention a user!')
+    await User.deleteMany();
 
-    const usUser = await User.findOne({ userId: usMention.id })
-    if(!usUser) return error(message, 'This user is not registered yet!')
-
-    usUser.cash = Number(args[1])
-    await usUser.save();
-
-    message.channel.send({ content: 'el nick de ese negro ha sido cambiado!'})
+    message.channel.send({ content: 'asd'})
   },
 };
