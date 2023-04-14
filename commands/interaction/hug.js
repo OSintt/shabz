@@ -21,7 +21,7 @@ module.exports = {
 
         message.channel.send({ embeds:[
             new EmbedBuilder()
-            .setDescription(`**${message.author.username}** has a hugger to **${usMention.user.username}**\n${usMention.user.username} has received ${usExists.hugs} hug in total `)
+            .setDescription(`**${message.author.username}** has a hugger to **${usMention.user.username}**\n*${usMention.user.username}* has received *${usExists.hugs}* hug in total `)
             .setImage(star.hug())
         ]})
     }

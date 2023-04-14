@@ -10,7 +10,7 @@ module.exports = {
 
         if(!message.member.roles.cache.has("1093988810943107175")) return error(message, 'Nope')
 
-        usExists.cash = usExists.cash + 1000;
+        usExists.cash = usExists.cash + 10000;
         await usExists.save();
 
         const embed = new EmbedBuilder()
