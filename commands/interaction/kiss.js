@@ -19,11 +19,6 @@ module.exports = {
         
         if(usMention === message.author) return error(message, 'Nope')
 
-        let ks = usUser;
-        const user = usExists;
-        marry.marry = message.author.id;
-        user.marry = message.mentions.users.first().id;
-
         usExists.kiss = {
             userId: usMention.id,
             kisses: usUser.kiss.kisses + 1
@@ -36,4 +31,4 @@ module.exports = {
             .setImage(star.kiss())
         ]})
     }
-}   
+}
