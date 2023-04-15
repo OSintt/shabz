@@ -14,20 +14,29 @@ module.exports = {
 
         const usMention = message.mentions.users.first()
         if(!usMention) return error(message, 'Forgot mentioned an user!')
-        const usUser = await User.findOne({ userId: message.mentions.members.first().id })
-        if(!usUser) return error(message, 'This user is not registered yet!')
+        const usProfile = await User.findOne({ userId: message.mentions.members.first().id })
+        if(!usProfile) return error(message, 'This user is not registered yet!')
         
         if(usMention === message.author) return error(message, 'Nope')
 
-        usExists.kiss = {
-            userId: usMention.id,
-            kisses: usUser.kiss.kisses + 1
+        let kiss = usExists;
+        const user = usProfile;
+        kiss.kiss = message.author.id;
+        user.kiss = message.mentions.users.first().id;
+
+        const kisses = {
+            userId: user.kiss,
+            kiss: + 1
         }
+
+        usExists.kiss.push(kisses)
+        usProfile.kiss.push(kisses)
         await usExists.save();
+        await usProfile.save();
 
         message.channel.send({ embeds:[
             new EmbedBuilder()
-            .setDescription(`**${message.author.username}** kiss to **${usMention.username}**\n${usMention.username} and ${message.author.username} ${usUser.kiss.kisses} pat in total `)
+            .setDescription(`**${message.author.username}** kiss to **${usMention.username}**\n${usMention.username} and ${message.author.username} ${usProfile.kisses.kiss} kiss in total `)
             .setImage(star.kiss())
         ]})
     }

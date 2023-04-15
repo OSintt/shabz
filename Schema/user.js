@@ -47,10 +47,8 @@ const UserSchema = new Schema({
         default: 0
     },
     kiss: {
-        userId: {
-            type: String
-        },
-        kisses: Number
+        type: Array,
+        default: []
     },
     afk: {
         afk: {
