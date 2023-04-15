@@ -8,6 +8,39 @@ module.exports = {
     const usMention = message.mentions.users.first() || message.author;
     const data = await User.findOne({ userId: usMention.id })
     if (!data) return error(message, "Try 6register first!")
+    
+    if(data.Language === 'Spanish'){
+      const embed = new EmbedBuilder()
+      .setAuthor({
+        name: usMention.tag,
+        iconUrl: usMention.displayAvatarURL({ dynamic: true }),
+      })
+      .setThumbnail(data.avatar)
+      .setDescription(
+        `**${usMention.username}**'s tu bal actual es: \`${data.cash + data.bank}\``
+      )
+      .setFields(
+        {
+          name: `${data.emoji} Dinero`,
+          value: `\`${data.cash}\``,
+          inline: true,
+        },
+        {
+          name: `${data.emoji} Banco`,
+          value: `\`${data.bank}\``,
+          inline: true,
+        },
+        {
+          name: `${data.emoji} Todo el dinero`,
+          value: `\`${data.cash + data.bank}\``,
+          inline: true,
+        }
+      );
+
+    await message.channel.send({
+      embeds: [embed],
+    });
+    } else {
     const embed = new EmbedBuilder()
       .setAuthor({
         name: usMention.tag,
@@ -38,5 +71,6 @@ module.exports = {
     await message.channel.send({
       embeds: [embed],
     });
+    }
   },
 };

@@ -2,24 +2,29 @@ const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
 const { error, us} = require("../lib/utils");
 module.exports = {
-  name: "avatar-set",
-  description: "You forgot to put u avatar!",
+  name: "language-set",
+  description: "You forgot to put u nicknamee",
   auth: true,
   run: async (client, message, args, usExists) => {
 
-    const usAvatar = message.attachments.first()
+    const language = args[0]
+    if(!language) return error(message, 'You forgot to put the language of ur profile!')
 
-    if(usExists.Language === 'Spanish'){
-    if(!usAvatar) return error(message, 'Olvidaste poner tu avatar!')
-    } else {
-      if(!usAvatar) return error(message, 'You forgot to put your avatar!')
+    if(language === 'Spanish'){
+        
+    usExists.Language = "Spanish";
+    await usExists.save();
     }
+
+    
+    if(language === 'English'){
+        
+        usExists.Language = "English";
+        await usExists.save();
+        }
 
     const user = usExists.marry
     const marry = await User.findOne({ userId: user })
-
-    usExists.avatar = usAvatar.url
-    await usExists.save();
 
     const profile = new EmbedBuilder()
       .setAuthor({
@@ -75,7 +80,7 @@ module.exports = {
         },
         {
           name: `Biografia`,
-          value: `\`\`\`${usExists.bio}\`\`\``  
+          value: `\`\`\`${usExists.bio}\`\`\``,
         }
       );
 

@@ -4,7 +4,6 @@ const { error } = require("../lib/utils");
 module.exports = {
   name: "register",
   description: "With this command can u register!",
-  cooldown: 3000,
   run: async (client, message, args, usExists) => {
     if (usExists) return error(message, "You're alredy registered!");
 
@@ -45,6 +44,9 @@ module.exports = {
           },
           {
             name: "Pats", value: `\`0\``, inline: true
+          },
+          {
+            name: 'Language', value: `\`English\``, inline: true
           },
           {
             name: "Married", value: `\`Single!\``, inline: true

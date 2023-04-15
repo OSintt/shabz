@@ -5,7 +5,6 @@ const { error, us } = require("../lib/utils")
 module.exports = {
     name: 'marry',
     description: 'With this command cann u marriage!',
-    cooldown: 3000,
     auth: true,
     run: async (client, message, args) => {
         const usMention = message.mentions.members.first()
@@ -14,10 +13,10 @@ module.exports = {
         const usExists = await User.findOne({ userId: usMention.id })
         if(!usExists) return error(message, 'Try 6register!')
 
-        if(usExists.marry) return error(message, "This user is already marriaged!")
+        if(usExists.marry) return error(message, "This user is not slots marry!")
 
         const usProfile = await User.findOne({ userId: message.author.id })
-        if(usProfile.marry) return error(message, "You're already marriaged!")
+        if(usProfile.marry) return error(message, "You don't slots marry!")
 
         if(usMention === message.author) return error(message, 'Nope')
 
@@ -43,7 +42,7 @@ module.exports = {
                 .setDescription(`Congratulations on the marriage of **${marry.nick}** and **${user.nick}**`)
                 message.channel.send({ embeds:[embed]})
                 return collector.stop();
-            } else if (collected.on === "no"){
+            } else if (collected.content === "no"){
                 return (message, `Well, **${usProfile.nick}** there will be more opportunities`)
                 return collector.stop();
             }

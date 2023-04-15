@@ -9,9 +9,15 @@ module.exports = {
 
     var maxLen = 20
 
-    if(args.join(' ').length > maxLen) return error(message, 'Nope')
-    if(!args.join(' ')) return error(message, 'You forgot to put u biografia')
-    if(args.join(' ').includes('`')) return error(message, 'Pick ur new biografia!')
+    if(usExists.Language === 'Spanish'){
+      if(args.join(' ').length > maxLen) return error(message, 'Tu apodo no puede tener más de 20 letras!')
+    if(!args.join(' ')) return error(message, 'Olvidaste poner tu biografia!')
+    if(args.join(' ').includes('`')) return error(message, 'Escribe tu nueva biografia!')
+    } else {
+      if(args.join(' ').length > maxLen) return error(message, 'Your nickname cannot be longer than 20 letters!')
+    if(!args.join(' ')) return error(message, 'You forgot to put u biografia!')
+    if(args.join(' ').includes('`')) return error(message, 'Write ur new biografia!')
+    }
 
     const user = usExists.marry
     const marry = await User.findOne({ userId: user })
@@ -59,6 +65,11 @@ module.exports = {
         {
           name: `${usExists.emoji} Pats`,
           value: `\`${usExists.pats}\``,
+          inline: true
+        },
+        {
+          name: `${usExists.emoji} Language`,
+          value: `\`${usExists.Language}\``,
           inline: true
         },
         {

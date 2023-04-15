@@ -62,6 +62,11 @@ module.exports = {
           inline: true
         },
         {
+          name: `${usExists.emoji} Language`,
+          value: `\`${usExists.Language}\``,
+          inline: true
+        },
+        {
           name: `${usExists.emoji} Married`,
           value: `\`${marry ? marry.nick : "Single!"}\``,
           inline: true,

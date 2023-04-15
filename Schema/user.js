@@ -4,6 +4,10 @@ const UserSchema = new Schema({
     userId: String,
     nick: String,
     avatar: String,
+    Language: {
+        type: String,
+        default: 'English'
+    },
     color: {
         type: String,
         default: 'BLACK'
@@ -45,6 +49,10 @@ const UserSchema = new Schema({
     pats: {
         type: Number,
         default: 0
+    },
+    slots:{
+        type: Number,
+        default: 1
     },
     kiss: {
         type: Array,

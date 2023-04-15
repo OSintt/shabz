@@ -9,6 +9,7 @@ module.exports = {
     const user = message.mentions.users.first() || message.author
     const data = await User.findOne({ userId: user.id });
     if (!data) return error(message, "Try 6register first!");
+
     const marry = await User.findOne({ userId: data.marry });
     const profile = new EmbedBuilder()
       .setAuthor({
@@ -50,6 +51,11 @@ module.exports = {
         {
           name: `${data.emoji} Pats`,
           value: `\`${data.pats}\``,
+          inline: true
+        },
+        {
+          name: `${data.emoji} Language`,
+          value: `\`${data.Language}\``,
           inline: true
         },
         {

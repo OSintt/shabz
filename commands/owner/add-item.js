@@ -27,11 +27,11 @@ module.exports = {
 
     const data = await Server.findOne({ guildId: message.guild.id })
     if(!data){
-        data = new Server({
+        const nuevo = new Server({
             guildId: message.guild.id,
             items: []
         });
-        await data.save();
+        await nuevo.save();
     }
 
     if(data.items === []){

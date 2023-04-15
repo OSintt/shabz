@@ -24,19 +24,23 @@ module.exports = {
         kiss.kiss = message.author.id;
         user.kiss = message.mentions.users.first().id;
 
-        const kisses = {
+        const objeto = {
             userId: user.kiss,
-            kiss: + 1
+            userKiss: usExists.kiss + 1
         }
 
-        usExists.kiss.push(kisses)
-        usProfile.kiss.push(kisses)
+        const objeto2 = {
+            userId: message.author.id
+        }
+
+        usProfile.kiss.push(objeto2)
+        usExists.kiss.push(objeto)
         await usExists.save();
         await usProfile.save();
 
         message.channel.send({ embeds:[
             new EmbedBuilder()
-            .setDescription(`**${message.author.username}** kiss to **${usMention.username}**\n${usMention.username} and ${message.author.username} ${usProfile.kisses.kiss} kiss in total `)
+            .setDescription(`**${message.author.username}** kiss to **${usMention.username}**\n${usMention.username} and ${message.author.username} ${usExists.kiss} kiss in total `)
             .setImage(star.kiss())
         ]})
     }

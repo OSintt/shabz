@@ -10,21 +10,10 @@ module.exports = {
 
     if(message.author.id !== hershell) return;
 
-    const itName = args[0]
-    if(!itName) return error(message, 'You forgot the name from item!')
-
     const data = await Server.findOne({ guildId: message.guild.id })
 
-    const shop = {
-        itemName: itName,
-    }
+    await Server.deleteMany()
 
-    data.items.findOneAndDelete(shop)
-
-    message.reply({ embeds: [
-        new EmbedBuilder()
-        .setTitle('New item created!')
-        .setDescription(`**Name:** \`${itName}\`\n**Emoji:** \`${itEmoji}\`\n**Price:** \`${itPrice}\`\n**Description:** \`${itDescription}\``)
-    ]})
+    message.channel.send({ content: 'asd'})
   },
 };

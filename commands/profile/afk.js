@@ -11,14 +11,26 @@ module.exports = {
       reason: args.length !== 0 ? args.join(" ") : 'discord.gg/peru'
     }
     await usExists.save();
+    if(usExists.Language === 'Spanish'){
     return message.channel.send({
       embeds: [
         new EmbedBuilder()
           .setAuthor({ name: message.author.tag })
-          .setTitle("Afk Established")
-          .setDescription(`**Reason:** ${usExists.afk.reason}`)
-          .setFooter({ text: "I will notify those who mention u!" }),
+          .setTitle("Afk Establecido")
+          .setDescription(`**Razón:** ${usExists.afk.reason}`)
+          .setFooter({ text: "Avisaré a los que te mencionen!" }),
       ],
     });
+    } else {
+      return message.channel.send({
+        embeds: [
+          new EmbedBuilder()
+            .setAuthor({ name: message.author.tag })
+            .setTitle("Afk Established")
+            .setDescription(`**Reason:** ${usExists.afk.reason}`)
+            .setFooter({ text: "I will notify those who mention u!" }),
+        ],
+      });
+    }
   },
 };

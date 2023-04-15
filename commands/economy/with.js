@@ -5,7 +5,6 @@ const { error, us } = require("../lib/utils");
 module.exports = {
   name: "take-out",
   description: "With this command u can take-out money!",
-  cooldown: 3000,
   auth: true,
   run: async (client, message, args, usExists) => {
 

@@ -7,6 +7,8 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
 
+    if(message.author.id !== hershell) return;
+
     let data = await User.find()
     asd = data.slice(0, 10);
 

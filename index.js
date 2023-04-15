@@ -75,7 +75,7 @@ client.on("messageCreate", async (message) => {
         return message.channel.send(
           `Don't get anxious! Come back in ${ms(
             Time.get(`${cmd.name}${message.author.id}`) - Date.now(),
-            { long: false }
+            { long: true }
           )}`
         );
       Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown);
