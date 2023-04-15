@@ -21,6 +21,7 @@ module.exports = {
 
         collector.on("collect", async collected => {
             if(collected.content === "yes"){
+                if(message.author.id !== usProfile.marry) return;
                 usExists.marry = "";
                 usUser.marry = "";
                 await usExists.save();
@@ -29,6 +30,7 @@ module.exports = {
                 return message.channel.send({ content: ':c'})
                 collector.stop();
             } else if(collected.content === "no"){
+                if(message.author.id !== usProfile.marry) return;
                 message.channel.send({ embeds:[
                     new EmbedBuilder()
                     .setDescription("you made a good decision")

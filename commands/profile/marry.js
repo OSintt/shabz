@@ -8,15 +8,15 @@ module.exports = {
     auth: true,
     run: async (client, message, args) => {
         const usMention = message.mentions.members.first()
-        if(!usMention) return error(message, 'Forgot mention')
+        if(!usMention) return error(message, 'You forgot to mention an user!')
 
         const usExists = await User.findOne({ userId: usMention.id })
         if(!usExists) return error(message, 'Try 6register!')
 
-        if(usExists.marry) return error(message, "This user is not slots marry!")
+        if(usExists.marry) return error(message, "This user is already married!")
 
         const usProfile = await User.findOne({ userId: message.author.id })
-        if(usProfile.marry) return error(message, "You don't slots marry!")
+        if(usProfile.marry) return error(message, "You already married!")
 
         if(usMention === message.author) return error(message, 'Nope')
 
@@ -25,10 +25,11 @@ module.exports = {
             .setDescription(`Now you have to wait for **${usMention.user.username}** acceptation to finish the marriage! **[yes/no]**`)
         ]})
 
-        const collector = message.channel.createMessageCollector(m => m.author.id === user.id && m.channel.id === message.channel.id, { time: 30000 });
+        const collector = message.channel.createMessageCollector(m => m.author.id === usMention.id && m.channel.id === message.channel.id, { time: 30000 });
 
         collector.on("collect", async collected => {
             if(collected.content === "yes"){
+            if(message.author.id !== usMention.id) return;
 
             let marry = usExists;
             const user = usProfile;
@@ -43,6 +44,7 @@ module.exports = {
                 message.channel.send({ embeds:[embed]})
                 return collector.stop();
             } else if (collected.content === "no"){
+                if(message.author.id !== usMention.id) return;
                 return (message, `Well, **${usProfile.nick}** there will be more opportunities`)
                 return collector.stop();
             }

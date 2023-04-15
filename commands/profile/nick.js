@@ -7,17 +7,23 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
 
-    var maxLen = 10
+    const msg =
+      usExists.Language === "Spanish"
+        ? "Olvidaste poner tu nick!"
+        : "You forgot to put ur new nick!";
 
-    if(args.join(' ').length > maxLen) return error(message, 'Nope')
-    if(!args.join(' ')) return error(message, 'You forgot to put u nicknamee')
-    if(args.join(' ').includes('`')) return error(message, 'Pick ur nickname!')
+    args = args.join(" ").replace(/`/gi, "");
+    args = args.replace(/\n/gi, " ").trim();
+    if (!args) return error(message, msg);
+    if (args.length > 10) {
+      args = args.slice(0, 9) + "...";
+    }
+
 
     const user = usExists.marry
     const marry = await User.findOne({ userId: user })
 
-    usExists.nick = args.join(' ')
-    await usExists.save();
+    usExists.nick = args;
 
     const profile = new EmbedBuilder()
       .setAuthor({
@@ -77,6 +83,7 @@ module.exports = {
         }
       );
 
+    await usExists.save();
     await message.channel.send({
       embeds: [profile],
     });

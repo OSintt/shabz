@@ -31,10 +31,14 @@ client.on("messageCreate", async (message) => {
   const usExists = await User.findOne({ userId: message.author.id });
 
   if (usExists && usExists.afk.afk) {
+    const msg =
+    usExists.Language === "Spanish" 
+    ? `Bienvenido de vuelta **${message.author.tag}**, tu estado AFK se ha eliminado`
+    : `Welcome back **${message.author.tag}**, ur AFK status has been removed!`
     usExists.afk.afk = false;
     await usExists.save();
-    message.channel.send({
-      content: `Welcome back ${message.author.tag}, ur AFK status has been removed.`,
+    message.reply({
+      content: msg,
     });
   }
 
@@ -43,20 +47,21 @@ client.on("messageCreate", async (message) => {
       userId: message.mentions.members.first().id,
     });
     if (mentioned && mentioned.afk.afk) {
-      message.channel.send({
-        embeds: [
-          new EmbedBuilder().setDescription(
-            `**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}`
-          ),
-        ],
-      });
+      const embed =
+      usExists.Language === "Spanish"
+      ? new EmbedBuilder()
+      .setDescription(`**${mentioned.nick}** está actualmente AFK!\n**Razón:** ${mentioned.afk.reason}`)
+      : new EmbedBuilder()
+      .setDescription(`**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}`)
+
+      await message.reply({ embeds: [embed] })
     }
   }
 
   const prefix = "6";
   if (!message.content.startsWith(prefix)) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
-  const command = args.shift().toLocaleLowerCase();
+  const command = args.shift();
   const cmd = client.commands.get(command);
   if (cmd) {
     const usExists = await User.findOne({ userId: message.author.id });

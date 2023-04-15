@@ -8,7 +8,12 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
 
-    if(!args[0]) return error(message, 'You forgot the amount to take-out money')
+    const msg =
+    usExists.Language === "Spanish"
+    ? "Olvidaste la cantidad a retirar del banco"
+    : "You forgot the amount to take-out money from the bank"
+
+    if(!args[0]) return error(message, msg)
 
     if(args[0] === 'all') {
         if(usExists.bank < 1) return error(message, "You've no money in your bank!")

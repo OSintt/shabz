@@ -8,12 +8,11 @@ module.exports = {
   run: async (client, message, args, usExists) => {
 
     const usEmoji = args[0]
-    if(!usEmoji) return message.channel.send({ embeds: [
-      new EmbedBuilder()
-      .setDescription('You forgot to put your emoji!')
-      .setFooter({ text: 'Remember that the emoji must be on my server!'})
-      .setColor('FF0000')
-    ]})
+    const msg = 
+    usExists.Language === "Spanish" 
+        ? "Olvidaste poner tu emoji!"
+        : "You forgot to put your emoji!"
+    if(!usEmoji) return error(message, msg)
 
     const guEmoji = message.guild.emojis.cache.find(x => x.name === args[0].split(":")[1])
     if(!guEmoji) return message.channel.send({ embeds: [
