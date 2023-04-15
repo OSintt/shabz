@@ -1,30 +1,25 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us} = require("../lib/utils");
+const { error, us } = require("../lib/utils");
 module.exports = {
   name: "bio-set",
   description: "You forgot to put u nicknamee",
   auth: true,
   run: async (client, message, args, usExists) => {
+    const msg =
+      usExists.Language === "Spanish"
+        ? "Olvidaste poner tu biografia!"
+        : "You forgot to put ur new bio!";
 
-    var maxLen = 20
-
-    if(usExists.Language === 'Spanish'){
-      if(args.join(' ').length > maxLen) return error(message, 'Tu apodo no puede tener más de 20 letras!')
-    if(!args.join(' ')) return error(message, 'Olvidaste poner tu biografia!')
-    if(args.join(' ').includes('`')) return error(message, 'Escribe tu nueva biografia!')
-    } else {
-      if(args.join(' ').length > maxLen) return error(message, 'Your nickname cannot be longer than 20 letters!')
-    if(!args.join(' ')) return error(message, 'You forgot to put u biografia!')
-    if(args.join(' ').includes('`')) return error(message, 'Write ur new biografia!')
+    args = args.join(" ").replace(/`/gi, "");
+    args = args.replace(/\n/gi, " ").trim();
+    if (!args) return error(message, msg);
+    if (args.length > 20) {
+      args = args.slice(0, 19) + "...";
     }
 
-    const user = usExists.marry
-    const marry = await User.findOne({ userId: user })
-
-    usExists.bio = args.join(' ')
-    await usExists.save();
-
+    const marry = await User.findOne({ userId: usExists.marry });
+    usExists.bio = args;
     const profile = new EmbedBuilder()
       .setAuthor({
         name: message.author.tag,
@@ -60,17 +55,17 @@ module.exports = {
         {
           name: `${usExists.emoji} Hugs`,
           value: `\`${usExists.hugs}\``,
-          inline: true
+          inline: true,
         },
         {
           name: `${usExists.emoji} Pats`,
           value: `\`${usExists.pats}\``,
-          inline: true
+          inline: true,
         },
         {
           name: `${usExists.emoji} Language`,
           value: `\`${usExists.Language}\``,
-          inline: true
+          inline: true,
         },
         {
           name: `${usExists.emoji} Married`,
@@ -82,8 +77,8 @@ module.exports = {
           value: `\`\`\`${usExists.bio}\`\`\``,
         }
       );
-
-    await message.channel.send({
+    await usExists.save();
+    return message.channel.send({
       embeds: [profile],
     });
   },

@@ -1,24 +1,19 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us} = require("../lib/utils");
+const { error, us } = require("../lib/utils");
 module.exports = {
   name: "avatar-set",
   description: "You forgot to put u avatar!",
   auth: true,
   run: async (client, message, args, usExists) => {
-
-    const usAvatar = message.attachments.first()
-
-    if(usExists.Language === 'Spanish'){
-    if(!usAvatar) return error(message, 'Olvidaste poner tu avatar!')
-    } else {
-      if(!usAvatar) return error(message, 'You forgot to put your avatar!')
-    }
-
-    const user = usExists.marry
-    const marry = await User.findOne({ userId: user })
-
-    usExists.avatar = usAvatar.url
+    const usAvatar = message.attachments.first();
+    const msg =
+      usExists.Language === "Spanish"
+        ? "Olvidaste poner tu avatar!"
+        : "You forgot to put your avatar!";
+    if (!usAvatar) return error(message, msg);
+    const marry = await User.findOne({ userId: usExists.marry });
+    usExists.avatar = usAvatar.url;
     await usExists.save();
 
     const profile = new EmbedBuilder()
@@ -56,17 +51,17 @@ module.exports = {
         {
           name: `${usExists.emoji} Hugs`,
           value: `\`${usExists.hugs}\``,
-          inline: true
+          inline: true,
         },
         {
           name: `${usExists.emoji} Pats`,
           value: `\`${usExists.pats}\``,
-          inline: true
+          inline: true,
         },
         {
           name: `${usExists.emoji} Language`,
           value: `\`${usExists.Language}\``,
-          inline: true
+          inline: true,
         },
         {
           name: `${usExists.emoji} Married`,
@@ -75,7 +70,7 @@ module.exports = {
         },
         {
           name: `Biografia`,
-          value: `\`\`\`${usExists.bio}\`\`\``  
+          value: `\`\`\`${usExists.bio}\`\`\``,
         }
       );
 
