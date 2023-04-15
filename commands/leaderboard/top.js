@@ -7,10 +7,10 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
 
-    let data = await User.find()  
-    data = data.slice(0, 10);
+    let data = await User.find()
+    asd = data.slice(0, 10);
 
-    const top = data.map((dato, i) => `${usExists.emoji} **${i === 0 ? "1" : i + 1} •** ${dato.nick} | **Coins**: \`${dato.cash + dato.bank}\``).join('\n')
+    const top = asd.map((dato, i) => `${usExists.emoji} **${i === 0 ? "1" : i + 1} •** ${dato.nick} | **Coins**: \`${dato.cash + dato.bank}\``).join('\n')
 
     const embed = new EmbedBuilder()
 
