@@ -34,19 +34,6 @@ module.exports = {
         await nuevo.save();
     }
 
-    if(data.items === []){
-        const shop = {
-            itemName: itName,
-            itemEmoji: itEmoji,
-            itemRol: itRol,
-            itemPrice: itPrice,
-            itemDescription: itDescription
-        }
-        data.items.push(shop)
-        await data.save();
-
-        return;
-    }
 
     const shop = {
         itemName: itName,
