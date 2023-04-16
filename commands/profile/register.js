@@ -4,22 +4,22 @@ const { error, getProfile } = require("../lib/utils");
 module.exports = {
   name: "register",
   description: "With this command can u register!",
-  run: async (client, message, args, usExists) => {
+  run: async (client, message, args, usExists, guild) => {
     if (usExists) return error(message, "You're alredy registered!");
-    const pene = [1, 2, 3, 4, 5, 6 ,7 ,8 ,9 ,10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    const nuevo = new User({
+    const pija = Math.round(Math.random() * 39);
+    let nuevo = new User({
       userId: message.author.id,
       nick: message.author.username,
       avatar: message.author.displayAvatarURL({ dynamic: true }),
-      pija: Math.floor(Math.random() * pene.length)
+      pija
     });
-    await nuevo.save();
+    nuevo = await nuevo.save();
     return message.channel.send({
       embeds:[new EmbedBuilder().setDescription('Creating profile, wait a moment...')]
     }).then(r => {
-      setTimeout(() => {
+      setTimeout(async () => {
         r.edit({ embeds:[
-          getProfile(message, usExists)
+          await getProfile(message, message.author.id, guild)
         ]})
       }, 3000)
     })

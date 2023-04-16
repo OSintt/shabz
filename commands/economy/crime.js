@@ -30,7 +30,6 @@ module.exports = {
       .setDescription(`You committed a crime and earned \`${crimeWin}\` coins`)
 
       message.channel.send({ embeds:[embed]})
-
     }
   },
 };

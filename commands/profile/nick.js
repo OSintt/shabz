@@ -5,7 +5,7 @@ module.exports = {
   name: "nick-set",
   description: "You forgot to put u nicknamee",
   auth: true,
-  run: async (client, message, args, usExists) => {
+  run: async (client, message, args, usExists, guild) => {
 
     const msg =
       usExists.Language === "Spanish"
@@ -13,15 +13,16 @@ module.exports = {
         : "You forgot to put ur new nick!";
 
     args = args.join(" ").replace(/`/gi, "");
-    args = args.replace(/\n/gi, " ").trim();
+    args = args.replace(/\*/gi, "");
+    args = args.replace(/\n/gi, " ");
     if (!args) return error(message, msg);
     if (args.length > 10) {
-      args = args.slice(0, 9) + "...";
+      args = args.trim().slice(0, 9) + "...";
     }
     usExists.nick = args;
     await usExists.save();
     await message.channel.send({
-      embeds: [await getProfile(message, usExists.userId)],
+      embeds: [await getProfile(message, usExists.userId, guild)],
     });
   },
 };

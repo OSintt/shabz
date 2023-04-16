@@ -5,7 +5,7 @@ module.exports = {
   name: "language-set",
   description: "You forgot to put u nicknamee",
   auth: true,
-  run: async (client, message, args, usExists) => {
+  run: async (client, message, args, usExists, guild) => {
     const language = args[0];
     if (!language || (language !== "Spanish" && language !== "English"))
       return error(
@@ -13,7 +13,7 @@ module.exports = {
         "You forgot to select you language [English/Spanish]!"
       );
     await message.channel.send({
-      embeds: [await getProfile(message, usExists.userId)],
+      embeds: [await getProfile(message, usExists.userId, guild)],
     });
   },
 };

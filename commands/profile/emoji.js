@@ -5,7 +5,7 @@ module.exports = {
   name: "emoji-set",
   description: "You forgot to put u emote!",
   auth: true,
-  run: async (client, message, args, usExists) => {
+  run: async (client, message, args, usExists, guild) => {
     args = args[0];
     const msg =
       usExists.Language === "Spanish"
@@ -25,7 +25,7 @@ module.exports = {
       .then((r) => {
         setTimeout(async () => {
           r.edit({
-            embeds: [await getProfile(message, usExists.id)],
+            embeds: [await getProfile(message, usExists.id, guild)],
           });
         }, 3000);
       });

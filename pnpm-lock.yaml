@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  dayjs: ^1.11.7
   discord.js: ^14.9.0
   dotenv: ^16.0.3
   marsnpm: ^0.5.2
@@ -10,6 +11,7 @@ specifiers:
   star-labs: ^1.1.2
 
 dependencies:
+  dayjs: 1.11.7
   discord.js: 14.9.0
   dotenv: 16.0.3
   marsnpm: 0.5.2
@@ -185,6 +187,10 @@ packages:
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
+
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
+    dev: false
 
   /debug/3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}

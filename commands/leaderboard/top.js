@@ -1,26 +1,42 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { hershell, error } = require("../lib/utils")
+const { hershell, error } = require("../lib/utils");
 module.exports = {
   name: "top",
   decription: "You can see the leaderboard",
   auth: true,
   run: async (client, message, args, usExists) => {
-
-    if(message.author.id !== hershell) return;
-
-    let data = await User.find()
-    asd = data.slice(0, 10);
-
-    const top = asd.map((dato, i) => `${usExists.emoji} **${i === 0 ? "1" : i + 1} •** ${dato.nick} | **Coins**: \`${dato.cash + dato.bank}\``).join('\n')
+    args = args[0];
+    let data;
+    const getTop = {
+      xp: async () => (data = await User.find().sort({ xp: -1 })),
+      rep: async () => (data = await User.find().sort({ rep: -1 })),
+      cash: async () => (data = await User.find().sort({ coins: -1 })),
+      pija: async () => (data = await User.find().sort({ pija: -1 })),
+      bank: async () => (data = await User.find().sort({ bank: -1 })),
+      def: () => (data = null),
+    };
+    await (getTop[args] || getTop["def"])();
+    if (!data)
+      return error(
+        message,
+        "__**Usage:**__:\n`6rank <xp | rep | coins | bank | pija>`"
+      );
+    data = data.slice(0, 10);
+    const top = data
+      .map(
+        (u, i) =>
+          `${usExists.emoji} **${i + 1}** • ${u.nick} | **${args}**: \`${
+            u[args]
+          }\``
+      )
+      .join("\n");
 
     const embed = new EmbedBuilder()
+      .setTitle(`Users top in ${args}!`)
+      .setDescription(`${top}`)
+      .setTimestamp();
 
-    .setTitle('Users top in economy!')
-    .setDescription(`${top}`)
-    .setTimestamp()
-    
-    message.channel.send({ embeds: [embed] })
-
+    message.channel.send({ embeds: [embed] });
   },
 };

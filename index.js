@@ -11,6 +11,7 @@ require("./conexion");
 
 config();
 
+const Server = require("./Schema/server");
 const User = require("./Schema/user");
 const { error } = require("console");
 
@@ -29,32 +30,21 @@ for (const folder of commandFolder) {
 
 client.on("messageCreate", async (message) => {
   const usExists = await User.findOne({ userId: message.author.id });
-
-  if (usExists && usExists.afk.afk) {
-    const msg =
-    usExists.Language === "Spanish" 
-    ? `Bienvenido de vuelta **${message.author.tag}**, tu estado AFK se ha eliminado`
-    : `Welcome back **${message.author.tag}**, ur AFK status has been removed!`
-    usExists.afk.afk = false;
-    await usExists.save();
-    message.reply({
-      content: msg,
-    });
-  }
-
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
       userId: message.mentions.members.first().id,
     });
     if (mentioned && mentioned.afk.afk) {
       const embed =
-      usExists.Language === "Spanish"
-      ? new EmbedBuilder()
-      .setDescription(`**${mentioned.nick}** está actualmente AFK!\n**Razón:** ${mentioned.afk.reason}`)
-      : new EmbedBuilder()
-      .setDescription(`**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}`)
+        usExists.Language === "Spanish"
+          ? new EmbedBuilder().setDescription(
+              `**${mentioned.nick}** está actualmente AFK!\n**Razón:** ${mentioned.afk.reason}`
+            )
+          : new EmbedBuilder().setDescription(
+              `**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}`
+            );
 
-      await message.reply({ embeds: [embed] })
+      await message.reply({ embeds: [embed] });
     }
   }
 
@@ -63,9 +53,30 @@ client.on("messageCreate", async (message) => {
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift();
   const cmd = client.commands.get(command);
+  let guild;
   if (cmd) {
-    const usExists = await User.findOne({ userId: message.author.id });
     if (usExists) {
+      const server = await Server.findOne({ guildId: message.guild.id });
+      if (!server) {
+        await Server.create({
+          guildId: message.guild.id,
+        });
+      }
+      if (!usExists.servers.includes(server._id)) {
+        usExists.servers.push({ server: server._id, inventory: [] });
+      }
+      guild = await usExists.servers.find(s => s.server === server._id);
+      if (usExists.afk.afk) {
+        const msg =
+          usExists.Language === "Spanish"
+            ? `Bienvenido de vuelta **${message.author.tag}**, tu estado AFK se ha eliminado`
+            : `Welcome back **${message.author.tag}**, ur AFK status has been removed!`;
+        usExists.afk.afk = false;
+        await usExists.save();
+        message.reply({
+          content: msg,
+        });
+      }
       if (xpdown.has(message.author.id)) return;
       let xplist = [15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 29, 30, 35];
       xp = Math.floor(Math.random() * xplist.length);
@@ -96,8 +107,8 @@ client.on("messageCreate", async (message) => {
             .setColor("FF0000"),
         ],
       });
-    return cmd.run(client, message, args, usExists);
-  } 
+    return cmd.run(client, message, args, usExists, guild);
+  }
 });
 
 client.login(process.env.TOKEN);
