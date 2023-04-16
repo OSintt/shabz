@@ -6,6 +6,7 @@ specifiers:
   marsnpm: ^0.5.2
   mongoose: ^7.0.3
   nodemon: ^2.0.22
+  ordinal: ^1.0.3
   star-labs: ^1.1.2
 
 dependencies:
@@ -13,6 +14,7 @@ dependencies:
   dotenv: 16.0.3
   marsnpm: 0.5.2
   mongoose: 7.0.3
+  ordinal: 1.0.3
   star-labs: 1.1.2
 
 devDependencies:
@@ -488,6 +490,10 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /ordinal/1.0.3:
+    resolution: {integrity: sha512-cMddMgb2QElm8G7vdaa02jhUNbTSrhsgAGUz1OokD83uJTwSUn+nKoNoKVVaRa08yF6sgfO7Maou1+bgLd9rdQ==}
+    dev: false
 
   /peek-readable/5.0.0:
     resolution: {integrity: sha512-YtCKvLUOvwtMGmrniQPdO7MwPjgkFBtFIrmfSbYmYuq3tKDV/mcfAhBth1+C3ru7uXIZasc/pHnb+YDYNkkj4A==}
