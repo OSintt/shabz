@@ -28,6 +28,16 @@ for (const folder of commandFolder) {
   }
 }
 
+client.on("ready", () => {
+  client.user.setPresence({
+    status: "dnd",
+    game: {
+      name: "discord.gg/peru",
+      type: "WATCHING"
+    }
+  })
+})
+
 client.on("messageCreate", async (message) => {
   const usExists = await User.findOne({ userId: message.author.id });
   if (message.mentions.members.first()) {
