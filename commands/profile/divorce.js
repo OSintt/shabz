@@ -29,7 +29,10 @@ module.exports = {
       marry.marry = null;
       await usExists.save();
       await marry.save();
-      error(message, `You've just got divorced from ${marry.nick}! I hope you don't regret soon :(`);
+      error(
+        message,
+        `You've just got divorced from ${marry.nick}! I hope you don't regret soon :(`
+      );
       return collector.stop();
     });
 

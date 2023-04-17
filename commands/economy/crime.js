@@ -13,11 +13,6 @@ module.exports = {
     const crimep = Math.floor(Math.random() * 800) + 1
     const probabilite = Math.floor(Math.random() * 100) + 1
 
-    if(usExists.cash < crimep){
-        usExists.cash = 0;
-        await usExists.save();
-        return error(message, `Lost ${crimep}`)
-    }
     if(probabilite < 57){
         usExists.cash = usExists.cash - Number(crimep);
         await usExists.save();
