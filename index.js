@@ -3,7 +3,10 @@ const { config } = require("dotenv");
 const Discord = require("discord.js");
 const client = new Client({ intents: [3276799] });
 const fs = require("fs");
+const ms = require("ms")
 const xpdown = new Set();
+
+const Time = new Discord.Collection();
 
 require("./conexion");
 
@@ -93,6 +96,16 @@ client.on("messageCreate", async (message) => {
         setTimeout(() => {
           xpdown.delete(message.author.id);
         }, 4000);
+      }
+      if(cmd.cooldown && !usExists){
+        if(Time.has(`${cmd.name}${message.author.id}`)) return message.chanel.send(`You already ran this command, come back in ${ms(Time.get(`${cmd.name}${message.author.id}`) - Date.now(), { long: false })}`)
+        cmd.run(client, message, args)
+        Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown)
+        setTimeout(() => {
+          Time.delete(`${cmd.name}${message.author.id}`)
+        }, cmd.cooldown)
+      } else {
+        cmd.run(client, message, args)
       }
     }
     if (cmd.auth && !usExists)
