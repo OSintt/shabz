@@ -3,7 +3,7 @@ const { config } = require("dotenv");
 const Discord = require("discord.js");
 const client = new Client({ intents: [3276799] });
 const fs = require("fs");
-const ms = require("ms")
+const ms = require("ms");
 const xpdown = new Set();
 
 const Time = new Discord.Collection();
@@ -40,7 +40,9 @@ client.on("ready", () => {
 });
 
 client.on("messageCreate", async (message) => {
-  const usExists = await User.findOne({ userId: message.author.id });
+  const usExists = await User.findOne({ userId: message.author.id }).populate(
+    "servers"
+  );
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
       userId: message.mentions.members.first().id,
@@ -76,7 +78,7 @@ client.on("messageCreate", async (message) => {
       if (!usExists.servers.includes(server._id)) {
         usExists.servers.push({ server: server._id, inventory: [] });
       }
-      guild = await usExists.servers.find((s) => s.server === server._id);
+      guild = usExists.servers.find((s) => s.server === server._id);
       if (usExists.afk.afk) {
         const msg =
           usExists.Language === "Spanish"
@@ -97,26 +99,30 @@ client.on("messageCreate", async (message) => {
           xpdown.delete(message.author.id);
         }, 4000);
       }
-      if(cmd.cooldown && !usExists){
-        if(Time.has(`${cmd.name}${message.author.id}`)) return message.chanel.send(`You already ran this command, come back in ${ms(Time.get(`${cmd.name}${message.author.id}`) - Date.now(), { long: false })}`)
-        cmd.run(client, message, args)
-        Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown)
+      if (cmd.cooldown && !usExists) {
+        if (Time.has(`${cmd.name}${message.author.id}`))
+          return message.chanel.send(
+            `You already ran this command, come back in ${ms(
+              Time.get(`${cmd.name}${message.author.id}`) - Date.now(),
+              { long: false }
+            )}`
+          );
+        cmd.run(client, message, args);
+        Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown);
         setTimeout(() => {
-          Time.delete(`${cmd.name}${message.author.id}`)
-        }, cmd.cooldown)
-      } else {
-        cmd.run(client, message, args)
+          Time.delete(`${cmd.name}${message.author.id}`);
+        }, cmd.cooldown);
       }
+      if (cmd.auth && !usExists)
+        return message.reply({
+          embeds: [
+            new EmbedBuilder()
+              .setDescription("You are not registered yet!")
+              .setColor("FF0000"),
+          ],
+        });
+      return cmd.run(client, message, args, usExists, guild);
     }
-    if (cmd.auth && !usExists)
-      return message.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setDescription("You are not registered yet!")
-            .setColor("FF0000"),
-        ],
-      });
-    return cmd.run(client, message, args, usExists, guild);
   }
 });
 
