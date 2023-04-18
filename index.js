@@ -31,10 +31,10 @@ client.on("ready", () => {
     status: "dnd",
     game: {
       name: "discord.gg/peru",
-      type: "WATCHING"
-    }
-  })
-})
+      type: "WATCHING",
+    },
+  });
+});
 
 client.on("messageCreate", async (message) => {
   const usExists = await User.findOne({ userId: message.author.id });
@@ -73,7 +73,7 @@ client.on("messageCreate", async (message) => {
       if (!usExists.servers.includes(server._id)) {
         usExists.servers.push({ server: server._id, inventory: [] });
       }
-      guild = await usExists.servers.find(s => s.server === server._id);
+      guild = await usExists.servers.find((s) => s.server === server._id);
       if (usExists.afk.afk) {
         const msg =
           usExists.Language === "Spanish"
@@ -85,14 +85,15 @@ client.on("messageCreate", async (message) => {
           content: msg,
         });
       }
-      if (xpdown.has(message.author.id)) return;
-      let xplist = [15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 29, 30, 35];
-      xp = Math.floor(Math.random() * xplist.length);
-      usExists.xp = usExists.xp + xp;
-      xpdown.add(message.author.id);
-      setTimeout(() => {
-        xpdown.delete(message.author.id);
-      }, 4000);
+      if (!xpdown.has(message.author.id)) {
+        let xplist = [15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 29, 30, 35];
+        xp = Math.floor(Math.random() * xplist.length);
+        usExists.xp = usExists.xp + xp;
+        xpdown.add(message.author.id);
+        setTimeout(() => {
+          xpdown.delete(message.author.id);
+        }, 4000);
+      }
     }
     if (cmd.auth && !usExists)
       return message.reply({
