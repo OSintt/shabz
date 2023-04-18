@@ -8,6 +8,8 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
 
+    if(message.author.id !== hershell) return;
+
     let data = await Server.findOne({ guildId: message.guild.id })
     if(!data) return error(message, 'This server doesnt have shop!')
     if(data.items === []) return error(message, "This server doesn't have items")

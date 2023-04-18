@@ -3,8 +3,6 @@ const { config } = require("dotenv");
 const Discord = require("discord.js");
 const client = new Client({ intents: [3276799] });
 const fs = require("fs");
-const ms = require("ms");
-const Time = new Discord.Collection();
 const xpdown = new Set();
 
 require("./conexion");
@@ -95,19 +93,6 @@ client.on("messageCreate", async (message) => {
       setTimeout(() => {
         xpdown.delete(message.author.id);
       }, 4000);
-    }
-    if (cmd.cooldown) {
-      if (Time.has(`${cmd.name}${message.author.id}`))
-        return message.channel.send(
-          `Don't get anxious! Come back in ${ms(
-            Time.get(`${cmd.name}${message.author.id}`) - Date.now(),
-            { long: true }
-          )}`
-        );
-      Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown);
-      setTimeout(() => {
-        Time.delete(`${cmd.name}${message.author.id}`);
-      }, cmd.cooldown);
     }
     if (cmd.auth && !usExists)
       return message.reply({

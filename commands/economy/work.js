@@ -5,7 +5,6 @@ module.exports = {
   name: "work",
   description: "With this command u can work!",
   auth: true,
-  cooldown: 3000 * 100,
   run: async (client, message, args, usExists) => {
     const random = Math.floor(Math.random() * 500) + 100;
     const embed = new EmbedBuilder()

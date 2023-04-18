@@ -6,7 +6,6 @@ const { error, us } = require("../lib/utils")
 module.exports = {
     name: 'pat',
     description: 'With this command can u pats!',
-    cooldown: 4000,
     auth: true,
     run: async (client, message, args, usExists) =>{
         const usMention = message.mentions.members.first()

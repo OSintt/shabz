@@ -5,7 +5,6 @@ const { error, us } = require("../lib/utils");
 module.exports = {
   name: "rep",
   description: "With this command u can paid rep to users!",
-  cooldown: 86400000,
   auth: true,
   run: async (client, message, args, usExists) => {
 

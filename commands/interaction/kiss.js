@@ -6,7 +6,6 @@ const { error, us, hershell } = require("../lib/utils")
 module.exports = {
     name: 'kiss',
     description: 'With this command u can kiss!',
-    cooldown: 4000,
     auth: true,
     run: async (client, message, args, usExists) => {
 
