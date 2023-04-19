@@ -7,39 +7,24 @@ module.exports = {
   description: "With this command u can your daily reward!",
   auth: true,
   run: async (client, message, args, usExists) => {
-
     const msg =
-    usExists.Language === "Spanish"
-    ? "Olvidaste la cantidad a depositar al banco"
-    : "You forgot the amount to deposit money from to bank"
+      usExists.Language === "Spanish"
+        ? "Olvidaste la cantidad a depositar al banco"
+        : "You forgot the amount to deposit money from to bank";
 
-    if(!args[0]) return error(message, msg)
-
-    if(args[0] === 'all') {
-        if(usExists.cash < 1) return error(message, "You've no money in your wallet!")
-        usExists.bank = usExists.bank + usExists.cash
-        usExists.cash = 0;
-        await usExists.save();
-
-        message.channel.send({ embeds: [
-            new EmbedBuilder()
-            .setDescription("You've deposited all money!")
-        ]})
+    if (!args[0]) return error(message, msg);
+    if (args[0] < 1) return error(message, 'Are you stupid?');
+    if (args[0] === "all") {
+      args[0] = usExists.cash;
     }
-    if(args[0] !== 'all') {
-        if(args.join('').includes('.')) return error(message, 'That is not a valid amount!')
-        if(isNaN(args[0])) return error(message, 'That is not a valid amount!')
-        if(usExists.cash < 1) return error(message, "You've no money in your wallet!")
-        if(args[0] > usExists.cash) return error(message, "You've no money in your wallet!")
+    args[0] = Math.round(args[0]);
+    if (usExists.cash < 1)
+      return error(message, "You've no money in your wallet!");
+    if (isNaN(args[0]) || args[0] == Infinity) return error(message, "That is not a valid amount!");
 
-        usExists.bank = usExists.bank + Number(args[0]);
-        usExists.cash = usExists.cash - Number(args[0]);
-        await usExists.save();
-
-      const embed = new EmbedBuilder()
-      .setDescription(`**You've deposited** \`${args[0]}\` **coins!**`)
-
-      message.channel.send({ embeds:[embed]})
-    }
+    usExists.bank += args[0];
+    usExists.cash -= args[0];
+    await usExists.save();
+    return error(message, `**You've deposited** \`${args[0]}\` **coins!**`);
   },
 };
