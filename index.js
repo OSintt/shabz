@@ -14,7 +14,7 @@ config();
 
 const Server = require("./Schema/server");
 const User = require("./Schema/user");
-const { error } = require("console");
+const { error } = require("./commands/lib/utils");
 
 client.commands = new Collection();
 
@@ -91,36 +91,30 @@ client.on("messageCreate", async (message) => {
         });
       }
       if (!xpdown.has(message.author.id)) {
-        let xplist = [15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 29, 30, 35];
-        xp = Math.floor(Math.random() * xplist.length);
-        usExists.xp = usExists.xp + xp;
+        const xp = Math.round(Math.random() * 35);
+        usExists.xp += xp;
+        await usExists.save();
         xpdown.add(message.author.id);
         setTimeout(() => {
           xpdown.delete(message.author.id);
         }, 4000);
       }
-      if (cmd.cooldown && !usExists) {
+      if (cmd.cooldown) {
         if (Time.has(`${cmd.name}${message.author.id}`))
-          return message.chanel.send(
-            `You already ran this command, come back in ${ms(
+          return error(
+            message,
+            `You used this command so recently! Come back in ${ms(
               Time.get(`${cmd.name}${message.author.id}`) - Date.now(),
               { long: false }
             )}`
           );
-        cmd.run(client, message, args);
         Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown);
         setTimeout(() => {
           Time.delete(`${cmd.name}${message.author.id}`);
         }, cmd.cooldown);
       }
       if (cmd.auth && !usExists)
-        return message.reply({
-          embeds: [
-            new EmbedBuilder()
-              .setDescription("You are not registered yet!")
-              .setColor("FF0000"),
-          ],
-        });
+        return error(message, "You are not registered yet!");
       return cmd.run(client, message, args, usExists, guild);
     }
   }
