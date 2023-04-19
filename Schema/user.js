@@ -4,6 +4,10 @@ const UserSchema = new Schema({
   userId: String,
   nick: String,
   avatar: String,
+  prefix: {
+    type: String,
+    default: '6'
+  },
   Language: {
     type: String,
     default: "English",
@@ -16,7 +20,10 @@ const UserSchema = new Schema({
     type: String,
     default: "<a:keeodbailando:1094283156527521853>",
   },
-  marry: String,
+  marry: {
+    userId: String,
+    date: Date
+  },
   bio: {
     type: String,
     default: "No bio yet!",

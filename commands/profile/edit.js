@@ -9,7 +9,7 @@ module.exports = {
 
     if(message.author.id !== hershell) return;
 
-    await User.deleteMany();
+    await User.deleteOne(({ userId: args[0] }));
 
     message.channel.send({ content: 'asd'})
   },

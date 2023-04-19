@@ -7,6 +7,7 @@ module.exports = {
     description: 'With this command cann u marriage!',
     auth: true,
     run: async (client, message, args) => {
+
         const usMention = message.mentions.members.first()
         if(!usMention) return error(message, 'You forgot to mention an user!')
 

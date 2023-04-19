@@ -18,6 +18,8 @@ module.exports = {
       args[0] = usExists.cash;
     }
     args[0] = Math.round(args[0]);
+    if(usExists.cash < args[0])
+    return error(message, "This amount not is a valid!")
     if (usExists.cash < 1)
       return error(message, "You've no money in your wallet!");
     if (isNaN(args[0]) || args[0] == Infinity) return error(message, "That is not a valid amount!");

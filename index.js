@@ -39,12 +39,13 @@ client.on("ready", () => {
   });
 });
 
+
 client.on("messageCreate", async (message) => {
-  const usExists = await User.findOne({ userId: message.author.id });
+  const usExists = await User.findOne({ userId: message.author.id })
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
       userId: message.mentions.members.first().id,
-    });
+    }); 
     if (mentioned && mentioned.afk.afk) {
       const embed =
         usExists.Language === "Spanish"
@@ -55,13 +56,13 @@ client.on("messageCreate", async (message) => {
               `**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}`
             );
 
-      await message.reply({ embeds: [embed] });
+      await message.reply({ embeds: [embed] }); 
     }
   }
 
-  const prefix = "6";
+  const prefix = '6';
   if (!message.content.startsWith(prefix)) return;
-  const args = message.content.slice(prefix.length).trim().split(/ +/);
+  const args = message.content.slice(prefix.length).trim().split(/ +/); 
   const command = args.shift();
   const cmd = client.commands.get(command);
   let guild;

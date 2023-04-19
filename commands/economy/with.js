@@ -18,6 +18,8 @@ module.exports = {
       args[0] = usExists.bank;
     }
     args[0] = Math.round(args[0]);
+    if(usExists.bank < args[0])
+    return error(message, "This amount not is a valid!")
     if (usExists.bank < 1)
       return error(message, "You have no money to with");
     if (isNaN(args[0]) || args[0] == Infinity)

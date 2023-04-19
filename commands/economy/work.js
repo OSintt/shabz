@@ -4,7 +4,6 @@ const User = require("../../Schema/user");
 module.exports = {
   name: "work",
   description: "With this command u can work!",
-  cooldown: 3000,
   auth: true,
   run: async (client, message, args, usExists) => {
     const random = Math.floor(Math.random() * 500) + 100;

@@ -11,7 +11,7 @@ module.exports = {
     const getTop = {
       xp: async () => (data = await User.find().sort({ xp: -1 })),
       rep: async () => (data = await User.find().sort({ rep: -1 })),
-      cash: async () => (data = await User.find().sort({ coins: -1 })),
+      cash: async () => (data = await User.find().sort({ cash: -1 })),
       pija: async () => (data = await User.find().sort({ pija: -1 })),
       bank: async () => (data = await User.find().sort({ bank: -1 })),
       def: () => (data = null),
@@ -20,7 +20,7 @@ module.exports = {
     if (!data)
       return error(
         message,
-        "__**Usage:**__:\n`6rank <xp | rep | coins | bank | pija>`"
+        "__**Usage:**__:\n`6rank <xp | rep | cash | bank | pija>`"
       );
     data = data.slice(0, 10);
     const top = data
@@ -30,7 +30,7 @@ module.exports = {
             u[args]
           }\``
       )
-      .join("\n");
+      .join("\n")
 
     const embed = new EmbedBuilder()
       .setTitle(`Users top in ${args}!`)
