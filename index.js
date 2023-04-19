@@ -97,16 +97,6 @@ client.on("messageCreate", async (message) => {
           xpdown.delete(message.author.id);
         }, 4000);
       }
-      if(cmd.cooldown && !usExists){
-        if(Time.has(`${cmd.name}${message.author.id}`)) return message.chanel.send(`You already ran this command, come back in ${ms(Time.get(`${cmd.name}${message.author.id}`) - Date.now(), { long: false })}`)
-        cmd.run(client, message, args)
-        Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown)
-        setTimeout(() => {
-          Time.delete(`${cmd.name}${message.author.id}`)
-        }, cmd.cooldown)
-      } else {
-        cmd.run(client, message, args)
-      }
     }
     if (cmd.auth && !usExists)
       return message.reply({
@@ -116,6 +106,14 @@ client.on("messageCreate", async (message) => {
             .setColor("FF0000"),
         ],
       });
+      if(cmd.cooldown){
+        if(Time.has(`${cmd.name}${message.author.id}`)) return message.chanel.send(`You already ran this command, come back in ${ms(Time.get(`${cmd.name}${message.author.id}`) - Date.now(), { long: false })}`)
+        cmd.run(client, message, args)
+        Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown)
+        setTimeout(() => {
+          Time.delete(`${cmd.name}${message.author.id}`)
+        }, cmd.cooldown)
+      } 
     return cmd.run(client, message, args, usExists, guild);
   }
 });
