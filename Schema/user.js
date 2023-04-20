@@ -20,10 +20,7 @@ const UserSchema = new Schema({
     type: String,
     default: "<a:keeodbailando:1094283156527521853>",
   },
-  marry: {
-    userId: String,
-    date: Date
-  },
+  marry: String,
   bio: {
     type: String,
     default: "No bio yet!",

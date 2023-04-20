@@ -8,13 +8,15 @@ module.exports = {
   cooldown: 86400000,
   auth: true,
   run: async (client, message, args, usExists) => {
-    usExists.cash = usExists.cash + 1000;
-    await usExists.save();
-    const embed = new EmbedBuilder().setDescription(
-      `You received ur daily reward!`
-    );
-    await message.channel.send({
-      embeds: [embed],
-    });
+
+    message.reply({ embeds: [
+      new EmbedBuilder()
+      .setDescription('You received your `2000` daily coins')
+      .setColor('#020202')
+    ]});
+    await User.findOneAndUpdate(
+      { userId: message.author.id },
+      { cash: usExists.cash + Number(1000) }
+    )
   },
 };

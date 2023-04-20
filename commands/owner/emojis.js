@@ -14,7 +14,7 @@ module.exports = {
     if(!emoji) return error(message, 'You forgot to put a emoji!')
 
     message.guild.emojis.create({ attachment: emoji, name: `${args[1]}`}).then(emoji => {
-      return message.message.send({ content: `${emoji}` })
+      return message.message.channel.send({ content: `${emoji}` })
     })
   },
-};
+}; 

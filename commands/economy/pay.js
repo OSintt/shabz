@@ -27,33 +27,26 @@ module.exports = {
 
     if(usMention === message.author) return error(message, 'Nope')
 
-    if(args[1] === 'all') {
-        if(usExists.cash < 1) return error(message, "You've no money in your wallet!")
-        usUser.cash = usUser.cash + usExists.cash;
-        usExists.cash = 0;
-        await usUser.save();
-        await usExists.save();
-
-        message.channel.send({ embeds: [
-            new EmbedBuilder()
-            .setDescription(`You just have paid \`all\` coins to **${usMention.username}**`)
-        ]})
+    if (args[1] === "all") {
+      args[1] = usExists.cash;
     }
-    if(args[1] !== 'all') {
-        if(args.join('').includes('.')) return error(message, 'That is not a valid amount!')
-        if(isNaN(args[1])) return error(message, 'That is not a valid amount!')
-        if(usExists.cash < 1) return error(message, "You've no money in your wallet!")
-        if(args[1] > usExists.cash) return error(message, "You've no money in your wallet!")
+    args[1] = Math.round(args[1])
+    if(usExists.cash < args[1])
+    return error(message, "You've no money in your wallet!")
+    if (usExists.bank < 1)
+      return error(message, "You've no money to paid to user!");
+    if (isNaN(args[1]) || args[1] == Infinity)
+      return error(message, "That is not a valid amount!");
 
-        usUser.cash = usUser.cash + Number(args[1]);
-        usExists.cash = usExists.cash - Number(args[1]);
-        await usUser.save();
-        await usExists.save();
+    usExists.cash -= args[1];
+    usUser.cash += args[1];
+    await usExists.save();
+    await usUser.save();
 
-      const embed = new EmbedBuilder()
-      .setDescription(`**You've pay** \`${args[1]}\` **coins to ${usMention.username}!**`)
-
-      message.channel.send({ embeds:[embed]})
-    }
+    return message.reply({ embeds: [
+      new EmbedBuilder()
+      .setDescription(`**You've paid** \`${args[1]}\` **coins!**`)
+      .setColor("#020202")
+    ]})
   },
 };  

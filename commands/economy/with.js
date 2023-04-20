@@ -27,7 +27,12 @@ module.exports = {
 
     usExists.bank -= args[0];
     usExists.cash += args[0];
+    await usExists.save();
 
-    return error(message, `**You've taken out** \`${args[0]}\` **coins!**`);
+    return message.reply({ embeds: [
+      new EmbedBuilder()
+      .setDescription(`**You've taken out** \`${args[0]}\` **coins!**`)
+      .setColor("#020202")
+    ]})
   },
 };
