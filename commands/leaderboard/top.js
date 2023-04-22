@@ -20,7 +20,7 @@ module.exports = {
     if (!data)
       return error(
         message,
-        "__**Usage:**__:\n`6rank <xp | rep | cash | bank | pija>`"
+        "__**Usage:**__:\n`6top <xp | rep | cash | bank | pija>`"
       );
     data = data.slice(0, 10);
     const top = data

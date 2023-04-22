@@ -34,7 +34,6 @@ client.on("ready", () => {
     status: "dnd",
     game: {
       name: "discord.gg/peru",
-      type: "WATCHING",
     },
   });
 });
@@ -42,6 +41,7 @@ client.on("ready", () => {
 
 client.on("messageCreate", async (message) => {
   const usExists = await User.findOne({ userId: message.author.id })
+  const usMencion = message.mentions.members.first()    
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
       userId: message.mentions.members.first().id,
@@ -107,6 +107,14 @@ client.on("messageCreate", async (message) => {
             .setColor("FF0000"),
         ],
       });
+      if (cmd.mention && !usMencion)
+      return message.reply({
+        embeds: [
+          new EmbedBuilder()
+          .setDescription('You forgot to mention an user!')
+          .setColor('FF0000')
+        ]
+      })
       if(cmd.cooldown){
         if(Time.has(`${cmd.name}${message.author.id}`)) return message.channel.send(`You already ran this command, come back in ${ms(Time.get(`${cmd.name}${message.author.id}`) - Date.now(), { long: false })}`)
         Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown)

@@ -6,6 +6,7 @@ module.exports = {
   name: "pay",
   description: "With this command u can take-out money!",
   auth: true,
+  mention: true,
   run: async (client, message, args, usExists) => {
 
     const msg =
@@ -14,13 +15,10 @@ module.exports = {
     : "You forgot to mention an user!"
 
     const msg2 = usExists.Language === "Spanish"
-    ? "Olvidaste la cantidad de que pagarás al usuario!"
+    ? "Olvidaste la cantidad de dinero que pagarás al usuario!"
     : "You forgot the amount to pay money!"
 
-    const usMention = message.mentions.users.first();
-    if(!usMention) return error(message, msg)
-
-    const usUser = await User.findOne({ userId: usMention.id });
+    const usUser = await User.findOne({ userId: message.mentions.members.first().id });
     if(!usUser) return error(message, 'This user is not registed yet!')
 
     if(!args[1]) return error(message, msg2)

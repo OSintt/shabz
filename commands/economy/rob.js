@@ -6,10 +6,11 @@ module.exports = {
   name: "rob",
   description: "With this command u can robbed others users!",
   auth: true,
+  mention: true,
+  cooldown: 300000,
   run: async (client, message, args, usExists) => {
 
     const usMention = message.mentions.users.first();
-    if(!usMention) return error(message, 'You forgot to mention a user')
 
     const usUser = await User.findOne({ userId: usMention.id });
     if(!usUser) return error(message, 'This user is not registed yet!')
@@ -38,7 +39,6 @@ module.exports = {
       .setDescription(`You just robbed to **${usMention.username}** and won \`${rob}\``)
 
       message.channel.send({ embeds:[embed]})
-
     }
   },
 };  
