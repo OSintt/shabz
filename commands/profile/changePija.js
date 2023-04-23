@@ -7,11 +7,7 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
-    const msg =
-      usExists.Language === "Spanish"
-        ? "¡No tienes las monedas suficientes para cambiar el tamaño de tu pija!"
-        : "You don't have the enough coins to change your pija's length!";
-    if (usExists.cash < 5000) return error(message, msg);
+    if (usExists.cash < 5000) return error(message, "You don't have the enough coins to change your pija's length!");
     usExists.pija = Math.round(Math.random() * 69);
     await usExists.save();
     error(message, "Your new pija's length is: " + usExists.pija);

@@ -8,16 +8,12 @@ module.exports = {
   cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
     args = args[0];
-    const msg =
-      usExists.Language === "Spanish"
-        ? "Olvidaste poner tu emoji!"
-        : "You forgot to put your emoji!";
-    if (!args) return error(message, msg);
-
-    const emoji = message.guild.emojis.cache.find(
-      (x) => x.name === args[0].split(":")[1]
-    );
-    if (!emoji) return error(message, "That emoji is not on the server!");
+    if (!args) return error(message, "You forgot to put your new emoji!");
+    if (
+      !args.match(/<:.+?:\d+>/g) &&
+      !args.match(/<a:.+?:\d+>|<:.+?:\d+>/)
+    )
+      return error(message, "You forgot to enter your new emoji!");
     usExists.emoji = args;
     await usExists.save();
 
@@ -26,9 +22,9 @@ module.exports = {
       .then((r) => {
         setTimeout(async () => {
           r.edit({
-            embeds: [await getProfile(message, usExists.id, guild)],
+            embeds: [await getProfile(message, usExists.userId, guild)],
           });
-        }, 3000);
+        }, 1000);
       });
   },
 };

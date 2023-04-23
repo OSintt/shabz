@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us } = require("../lib/utils");
+const { error } = require("../lib/utils");
 
 module.exports = {
   name: "rob",
@@ -9,36 +9,34 @@ module.exports = {
   mention: true,
   cooldown: 300000,
   run: async (client, message, args, usExists) => {
-
     const usMention = message.mentions.users.first();
 
     const usUser = await User.findOne({ userId: usMention.id });
-    if(!usUser) return error(message, 'This user is not registed yet!')
+    if (!usUser) return error(message, "This user is not registed yet!");
 
-    if(usMention === message.author) return error(message, 'Nope')
-    if(usUser.cash < 1) return error(message, 'This user nove have money!')
+    if (usMention === message.author) return error(message, "Nope");
+    if (usUser.cash < 1) return error(message, "This user nove have money!");
 
-    const rob = Math.floor(Math.random() * usUser.cash) + 1
-    const probabilite = Math.floor(Math.random() * 100) + 1
-
-    if(usExists.cash < rob){
-        usExists.cash = 0;
-        await usExists.save();
+    const getRob = (us) => Math.round(us.cash * ((Math.random() * 15) / 100));
+    const probabilite = Math.floor(Math.random() * 3);
+    console.log(probabilite);
+    if (probabilite <= 1) {
+      const cash = getRob(usExists);
+      usExists.cash -= cash;
+      error(
+        message,
+        `You tried to rob **${usMention.username}** and lost \`${cash}\``
+      );
+    } else {
+      const cash = getRob(usUser);
+      usUser.cash -= cash;
+      usExists.cash += cash;
+      error(
+        message,
+        `You just robbed **${usMention.username}** and won \`${cash}\``
+      );
     }
-    if(probabilite < 57){
-        usExists.cash = usExists.cash - Number(rob);
-        await usExists.save();
-        return error(message, `You tried robbed to **${usMention.username}** and lost \`${rob}\``)
-    }
-    if(probabilite > 57){
-        usUser.cash = usUser.cash - Number(rob);
-        usExists.cash = usExists.cash + Number(rob);
-        await usUser.save();
-        await usExists.save();
-        const embed = new EmbedBuilder()
-      .setDescription(`You just robbed to **${usMention.username}** and won \`${rob}\``)
-
-      message.channel.send({ embeds:[embed]})
-    }
+    await usUser.save();
+    return await usExists.save();
   },
-};  
+};

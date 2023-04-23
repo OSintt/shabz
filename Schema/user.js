@@ -8,13 +8,9 @@ const UserSchema = new Schema({
     type: String,
     default: '6'
   },
-  Language: {
-    type: String,
-    default: "English",
-  },
   color: {
-    type: String,
-    default: "1146986",
+    type: Number,
+    default: 111,
   },
   emoji: {
     type: String,

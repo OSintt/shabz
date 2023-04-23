@@ -1,82 +1,18 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us } = require("../lib/utils");
+const { error, us, getProfile } = require("../lib/utils");
 module.exports = {
   name: "avatar-set",
   description: "You forgot to put u avatar!",
   auth: true,
   cooldown: 3000,
-  run: async (client, message, args, usExists) => {
+  run: async (client, message, args, usExists, guild) => {
     const usAvatar = message.attachments.first();
-    const msg =
-      usExists.Language === "Spanish"
-        ? "Olvidaste poner tu avatar!"
-        : "You forgot to put your avatar!";
-    if (!usAvatar) return error(message, msg);
-    const marry = await User.findOne({ userId: usExists.marry });
+    if (!usAvatar) return error(message, "You forgot to put your new avatar!");
     usExists.avatar = usAvatar.url;
     await usExists.save();
-
-    const profile = new EmbedBuilder()
-      .setAuthor({
-        name: message.author.tag,
-        iconURL: message.author.displayAvatarURL({ dynamic: true }),
-      })
-      .setThumbnail(usExists.avatar)
-      .setFields(
-        {
-          name: `${usExists.emoji} Nick`,
-          value: `\`${usExists.nick}\``,
-          inline: true,
-        },
-        {
-          name: `${usExists.emoji} Rep`,
-          value: `\`${usExists.rep}\``,
-          inline: true,
-        },
-        {
-          name: `${usExists.emoji} Coins`,
-          value: `\`${usExists.cash + usExists.bank}\``,
-          inline: true,
-        },
-        {
-          name: `${usExists.emoji} Xp`,
-          value: `\`${usExists.xp}\``,
-          inline: true,
-        },
-        {
-          name: `${usExists.emoji} Items`,
-          value: `\`${usExists.items}\``,
-          inline: true,
-        },
-        {
-          name: `${usExists.emoji} Hugs`,
-          value: `\`${usExists.hugs}\``,
-          inline: true,
-        },
-        {
-          name: `${usExists.emoji} Pats`,
-          value: `\`${usExists.pats}\``,
-          inline: true,
-        },
-        {
-          name: `${usExists.emoji} Language`,
-          value: `\`${usExists.Language}\``,
-          inline: true,
-        },
-        {
-          name: `${usExists.emoji} Married`,
-          value: `\`${marry ? marry.nick : "Single!"}\``,
-          inline: true,
-        },
-        {
-          name: `Biografia`,
-          value: `\`\`\`${usExists.bio}\`\`\``,
-        }
-      );
-
     await message.channel.send({
-      embeds: [profile],
+      embeds: [await getProfile(message, usExists.userId, guild)],
     });
   },
 };

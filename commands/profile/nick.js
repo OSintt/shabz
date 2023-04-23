@@ -7,16 +7,10 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
-
-    const msg =
-      usExists.Language === "Spanish"
-        ? "Olvidaste poner tu nick!"
-        : "You forgot to put ur new nick!";
-
     args = args.join(" ").replace(/`/gi, "");
     args = args.replace(/\*/gi, "");
     args = args.replace(/\n/gi, " ");
-    if (!args) return error(message, msg);
+    if (!args) return error(message, "You forgot to put ur new nick!");
     if (args.length > 10) {
       args = args.trim().slice(0, 9) + "...";
     }

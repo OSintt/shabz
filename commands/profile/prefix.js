@@ -6,25 +6,17 @@ module.exports = {
   description: "You forgot to put u nicknamee",
   auth: true,
   run: async (client, message, args, usExists, guild) => {
-
-    if(message.author.id !== hershell) return;
-
-    const msg =
-      usExists.Language === "Spanish"
-        ? "Olvidaste poner tu nuevo prefix!"
-        : "You forgot to put ur new prefix!";
-
     args = args.join(" ").replace(/`/gi, "");
     args = args.replace(/\*/gi, "");
     args = args.replace(/\n/gi, " ");
-    if (!args) return error(message, msg);
+    if (!args) return error(message, "You forgot to put ur new prefix!");
     if (args.length > 4) return error(message, "Your prefix can't have 4 letters")
     usExists.prefix = args;
     await usExists.save();
     await message.channel.send({
       embeds: [
         new EmbedBuilder()
-        .setDescription(`Your current prefixi is ${usExists.prefix}`)
+          .setDescription(`Your current prefix is ${usExists.prefix}`)
       ],
     });
   },

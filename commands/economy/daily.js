@@ -8,15 +8,10 @@ module.exports = {
   auth: true,
   cooldown: 86400000,
   run: async (client, message, args, usExists) => {
-
-    message.reply({ embeds: [
-      new EmbedBuilder()
-      .setDescription('You received your `2000` daily coins')
-      .setColor('#020202')
-    ]});
     await User.findOneAndUpdate(
       { userId: message.author.id },
-      { cash: usExists.cash + Number(1000) }
-    )
+      { cash: usExists.cash + 1000 }
+    );
+    return error(message, 'You received your `1000` daily coins! Keep working for more!');
   },
 };

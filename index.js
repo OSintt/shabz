@@ -3,7 +3,7 @@ const { config } = require("dotenv");
 const Discord = require("discord.js");
 const client = new Client({ intents: [3276799] });
 const fs = require("fs");
-const ms = require("ms")
+const ms = require("ms");
 const xpdown = new Set();
 
 const Time = new Discord.Collection();
@@ -14,7 +14,7 @@ config();
 
 const Server = require("./Schema/server");
 const User = require("./Schema/user");
-const { error } = require("console");
+const { error } = require("./commands/lib/utils");
 
 client.commands = new Collection();
 
@@ -38,41 +38,31 @@ client.on("ready", () => {
   });
 });
 
-
 client.on("messageCreate", async (message) => {
-  
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
-  if(message.content.match(RegMention)) {
-    message.reply({ embeds: [
-      new EmbedBuilder()
-      .setDescription('My prefix is `6`')
-      .setColor(1146986)
-    ]})
-  }
-  const usExists = await User.findOne({ userId: message.author.id })
-  const usMencion = message.mentions.members.first()    
+  const usExists = await User.findOne({ userId: message.author.id });
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
       userId: message.mentions.members.first().id,
-    }); 
+    });
     if (mentioned && mentioned.afk.afk) {
-      const embed =
-        usExists.Language === "Spanish"
-          ? new EmbedBuilder().setDescription(
-              `**${mentioned.nick}** está actualmente AFK!\n**Razón:** ${mentioned.afk.reason}`
-            )
-          : new EmbedBuilder().setDescription(
-              `**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}`
-            );
-
-      await message.reply({ embeds: [embed] }); 
+      const embed = new EmbedBuilder().setDescription(
+        `**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}`
+      );
+      await message.reply({ embeds: [embed] });
     }
   }
-
-  const prefix = '6';
+  const prefix = usExists ? usExists.prefix : '6';
+  if (message.content.match(RegMention)) {
+    message.reply({
+      embeds: [
+      new EmbedBuilder().setDescription(`My prefix is \`${prefix}\``).setColor(1146986),
+      ],
+    });
+  }
   if (!message.content.startsWith(prefix)) return;
-  const args = message.content.slice(prefix.length).trim().split(/ +/); 
+  const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift();
   const cmd = client.commands.get(command);
   let guild;
@@ -89,14 +79,10 @@ client.on("messageCreate", async (message) => {
       }
       guild = await usExists.servers.find((s) => s.server === server._id);
       if (usExists.afk.afk) {
-        const msg =
-          usExists.Language === "Spanish"
-            ? `Bienvenido de vuelta **${message.author.tag}**, tu estado AFK se ha eliminado`
-            : `Welcome back **${message.author.tag}**, ur AFK status has been removed!`;
         usExists.afk.afk = false;
         await usExists.save();
         message.reply({
-          content: msg,
+          content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
         });
       }
       if (!xpdown.has(message.author.id)) {
@@ -110,28 +96,23 @@ client.on("messageCreate", async (message) => {
       }
     }
     if (cmd.auth && !usExists)
-      return message.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setDescription("You are not registered yet!")
-            .setColor("FF0000"),
-        ],
-      });
-      if (cmd.mention && !usMencion)
-      return message.reply({
-        embeds: [
-          new EmbedBuilder()
-          .setDescription('You forgot to mention an user!')
-          .setColor('FF0000')
-        ]
-      })
-      if(cmd.cooldown){
-        if(Time.has(`${cmd.name}${message.author.id}`)) return message.channel.send(`You already ran this command, come back in ${ms(Time.get(`${cmd.name}${message.author.id}`) - Date.now(), { long: false })}`)
-        Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown)
-        setTimeout(() => {
-          Time.delete(`${cmd.name}${message.author.id}`)
-        }, cmd.cooldown)
-      } 
+      return error(message, "You are not registered yet!");
+    if (cmd.mention && !mentioned)
+      return error(message, "You forgot to mention an user!");
+    if (cmd.cooldown) {
+      if (Time.has(`${cmd.name}${message.author.id}`))
+        return error(
+          message,
+          `You already ran this command, come back in \`${ms(
+            Time.get(`${cmd.name}${message.author.id}`) - Date.now(),
+            { long: false }
+          )}\``
+        );
+      Time.set(`${cmd.name}${message.author.id}`, Date.now() + cmd.cooldown);
+      setTimeout(() => {
+        Time.delete(`${cmd.name}${message.author.id}`);
+      }, cmd.cooldown);
+    }
     return cmd.run(client, message, args, usExists, guild);
   }
 });
