@@ -6,6 +6,7 @@ module.exports = {
   name: "rank",
   description: "With this command can u see rank!",
   auth: true,
+  cooldown: 3000,
   run: async (client, message, args, usExists) => {
     args = args[0];
     const mention = message.mentions.users.first() || message.author;

@@ -5,6 +5,7 @@ module.exports = {
   name: "emoji-set",
   description: "You forgot to put u emote!",
   auth: true,
+  cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
     args = args[0];
     const msg =

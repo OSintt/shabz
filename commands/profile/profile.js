@@ -5,6 +5,7 @@ const { error, getProfile } = require("../lib/utils");
 module.exports = {
   name: "profile",
   description: "With command can see u profile",
+  cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
     const user = message.mentions.users.first() || message.author;
     const data = await User.findOne({ userId: user.id });

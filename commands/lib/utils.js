@@ -19,7 +19,7 @@ const getProfile = async (message, userId, guild, mention) => {
       iconURL: mention.displayAvatarURL({ dynamic: true }),
     })
     .setThumbnail(mention.displayAvatarURL({ dynamic: true }))
-    .setColor("#00ff00")
+    .setColor(1146986)
     .setDescription(
       `||${user.emoji}|| **Nick:** \`${user.nick}\` **Rep:** \`${
         user.rep

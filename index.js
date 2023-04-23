@@ -40,6 +40,16 @@ client.on("ready", () => {
 
 
 client.on("messageCreate", async (message) => {
+  
+  let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
+
+  if(message.content.match(RegMention)) {
+    message.reply({ embeds: [
+      new EmbedBuilder()
+      .setDescription('My prefix is `6`')
+      .setColor(1146986)
+    ]})
+  }
   const usExists = await User.findOne({ userId: message.author.id })
   const usMencion = message.mentions.members.first()    
   if (message.mentions.members.first()) {

@@ -7,6 +7,7 @@ module.exports = {
     name: 'kiss',
     description: 'With this command u can kiss!',
     auth: true,
+    cooldown: 3000,
     run: async (client, message, args, usExists) => {
 
         if(message.author.id !== hershell) return;

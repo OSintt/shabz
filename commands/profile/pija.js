@@ -5,6 +5,7 @@ module.exports = {
   name: "pija",
   description: "You forgot to put u nicknamee",
   auth: true,
+  cooldown: 3000,
   run: async (client, message, args, usExists) => {
 
     const usMention = message.mentions.users.first() || message.author;

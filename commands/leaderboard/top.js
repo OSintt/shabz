@@ -5,6 +5,7 @@ module.exports = {
   name: "top",
   decription: "You can see the leaderboard",
   auth: true,
+  cooldown: 3000,
   run: async (client, message, args, usExists) => {
     args = args[0];
     let data;

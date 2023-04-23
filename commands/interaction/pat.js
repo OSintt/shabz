@@ -7,6 +7,7 @@ module.exports = {
     name: 'pat',
     description: 'With this command can u pats!',
     auth: true,
+    cooldown: 3000,
     run: async (client, message, args, usExists) =>{
         const usMention = message.mentions.members.first()
         if(!usMention) return error(message, 'Forgot mentioned an user!')

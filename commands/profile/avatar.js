@@ -5,6 +5,7 @@ module.exports = {
   name: "avatar-set",
   description: "You forgot to put u avatar!",
   auth: true,
+  cooldown: 3000,
   run: async (client, message, args, usExists) => {
     const usAvatar = message.attachments.first();
     const msg =

@@ -6,6 +6,7 @@ module.exports = {
     name: 'marry',
     description: 'With this command cann u marriage!',
     auth: true,
+    cooldown: 3000,
     run: async (client, message, args) => {
 
         const usMention = message.mentions.members.first()

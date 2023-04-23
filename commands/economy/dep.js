@@ -6,6 +6,7 @@ module.exports = {
   name: "dep",
   description: "With this command u can your daily reward!",
   auth: true,
+  cooldown: 3000,
   run: async (client, message, args, usExists) => {
     const msg =
       usExists.Language === "Spanish"

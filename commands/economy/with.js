@@ -6,6 +6,7 @@ module.exports = {
   name: "with",
   description: "With this command u can take-out money!",
   auth: true,
+  cooldown: 2000,
   run: async (client, message, args, usExists) => {
     const msg =
       usExists.Language === "Spanish"

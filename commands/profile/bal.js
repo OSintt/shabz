@@ -4,6 +4,7 @@ const { error } = require("../lib/utils");
 module.exports = {
   name: "bal",
   description: "You can see your bal",
+  cooldown: 3000,
   run: async (client, message, usExists, args) => {
     const usMention = message.mentions.users.first() || message.author;
     const data = await User.findOne({ userId: usMention.id });

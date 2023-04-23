@@ -14,7 +14,7 @@ const UserSchema = new Schema({
   },
   color: {
     type: String,
-    default: "BLACK",
+    default: "1146986",
   },
   emoji: {
     type: String,

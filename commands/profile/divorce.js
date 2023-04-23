@@ -6,6 +6,7 @@ module.exports = {
   name: "divorce",
   description: "With this command can u divorce!",
   auth: true,
+  cooldown: 3000,
   run: async (client, message, args, usExists) => {
     if (!usExists.marry) return error(message, "You're not married yet!");
 

@@ -7,6 +7,7 @@ module.exports = {
     name: 'hug',
     description: 'With this command u can hugs!',
     auth: true,
+    cooldown: 3000,
     run: async (client, message, args) =>{
     
 

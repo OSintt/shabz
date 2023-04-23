@@ -6,6 +6,7 @@ module.exports = {
   name: "shop",
   decription: "You can see the leaderboard",
   auth: true,
+  cooldown: 2000,
   run: async (client, message, args, usExists) => {
 
     if(message.author.id !== hershell) return;

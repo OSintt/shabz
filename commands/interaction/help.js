@@ -5,6 +5,7 @@ const { error, us } = require("../lib/utils")
 module.exports = {
     name: 'help',
     description: 'pene',
+    cooldown: 5000,
     run: async (client, message, args, usExists) => {
 
         const asd = args[0]

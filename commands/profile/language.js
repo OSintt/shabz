@@ -5,6 +5,7 @@ module.exports = {
   name: "language-set",
   description: "You forgot to put u nicknamee",
   auth: true,
+  cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
     const language = args[0];
     if (!language || (language !== "Spanish" && language !== "English"))
