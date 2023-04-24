@@ -23,4 +23,4 @@ module.exports = {
             .setImage(star.pat())
         ]})
     }
-}   
+}

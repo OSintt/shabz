@@ -8,7 +8,8 @@ const error = (message, msg) => {
   });
 };
 
-const success = (message, msg, usExists) => {
+const success = async (message, msg, usExists) => {
+  usExists = await User.findOne({ userId: message.author.id })
   message.reply({
     embeds: [new EmbedBuilder().setDescription(msg).setColor(usExists.color)],
   });
@@ -61,4 +62,4 @@ const getProfile = async (message, userId, guild, mention) => {
     });
 };
 const hershell = "793161028988960798";
-module.exports = { hershell, error, getProfile, checkInt };
+module.exports = { hershell, error, success, getProfile, checkInt };

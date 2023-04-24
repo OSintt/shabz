@@ -97,7 +97,7 @@ client.on("messageCreate", async (message) => {
     }
     if (cmd.auth && !usExists)
       return error(message, "You are not registered yet!");
-    if (cmd.mention && !mentioned)
+    if (cmd.mention && !message.mentions.members.first())
       return error(message, "You forgot to mention an user!");
     if (cmd.cooldown) {
       if (Time.has(`${cmd.name}${message.author.id}`))

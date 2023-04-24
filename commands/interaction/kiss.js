@@ -7,13 +7,12 @@ module.exports = {
     name: 'kiss',
     description: 'With this command u can kiss!',
     auth: true,
+    mention: true,
     cooldown: 3000,
     run: async (client, message, args, usExists) => {
 
         if(message.author.id !== hershell) return;
 
-        const usMention = message.mentions.users.first()
-        if(!usMention) return error(message, 'Forgot mentioned an user!')
         const usProfile = await User.findOne({ userId: message.mentions.members.first().id })
         if(!usProfile) return error(message, 'This user is not registered yet!')
         

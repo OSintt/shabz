@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us, getProfile} = require("../lib/utils");
+const { error, us, getProfile, success} = require("../lib/utils");
 module.exports = {
   name: "nick-set",
   description: "You forgot to put u nicknamee",
@@ -16,7 +16,7 @@ module.exports = {
     }
     usExists.nick = args;
     await usExists.save();
-    await message.channel.send({
+    await message.reply({
       embeds: [await getProfile(message, usExists.userId, guild)],
     });
   },

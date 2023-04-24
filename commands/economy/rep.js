@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us } = require("../lib/utils");
+const { error, us, success } = require("../lib/utils");
 
 module.exports = {
   name: "rep",
@@ -19,7 +19,7 @@ module.exports = {
     usUser.rep = usUser.rep + 1;
     await usUser.save();
 
-    return error(
+    return success(
       message,
       `You just have given \`1\` rep to **${usMention.username}**`
     );

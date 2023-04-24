@@ -36,6 +36,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`Users top in ${args}!`)
       .setDescription(`${top}`)
+      .setColor(usExists.color)
       .setTimestamp();
 
     message.channel.send({ embeds: [embed] });

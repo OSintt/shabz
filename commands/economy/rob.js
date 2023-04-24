@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error } = require("../lib/utils");
+const { error, success } = require("../lib/utils");
 
 module.exports = {
   name: "rob",
@@ -31,7 +31,7 @@ module.exports = {
       const cash = getRob(usUser);
       usUser.cash -= cash;
       usExists.cash += cash;
-      error(
+      success(
         message,
         `You just robbed **${usMention.username}** and won \`${cash}\``
       );

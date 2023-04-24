@@ -17,11 +17,13 @@ module.exports = {
             .setAuthor({ name: message.author.tag })
             .setTitle("Afk Establecido")
             .setDescription(`**Razón:** ${usExists.afk.reason}`)
+            .setColor(usExists.color)
             .setFooter({ text: "Avisaré a los que te mencionen!" })
         : new EmbedBuilder()
             .setAuthor({ name: message.author.tag })
             .setTitle("Afk Established")
             .setDescription(`**Reason:** ${usExists.afk.reason}`)
+            .setColor(usExists.color)
             .setFooter({ text: "I will notify those who mention u!" });
 
     await usExists.save();

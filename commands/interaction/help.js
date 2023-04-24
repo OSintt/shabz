@@ -13,19 +13,19 @@ module.exports = {
             new EmbedBuilder()
             .setDescription(`Hi **${message.author.username}** I'm **${client.user.username}**, just another average ${message.guild.name} bot`)
             .setFields({
-                name: 'Profile', 
-                value: '`register` `profile` `nick-set` `bio-set` `emoji-set` `image-set` `pija` `change-pija` `rank`',
+                name: '<a:shb_em3_putas:1099847960180838514> Profile', 
+                value: '`register` `profile` `nick-set` `bio-set` `emoji-set` `image-set` `color-set` `prefix-set` `pija` `changePija` `rank`',
             },
             {
-                name: 'Economy',
-                value: '`work` `daily` `collect-income` `crime` `dep` `with` `pay` `rep` `rob`',
+                name: '<a:shb_em3_putas:1099847960180838514> Economy',
+                value: '`work` `daily` `crime` `slut` `dep` `with` `pay` `rep` `rob` `shop` `buy` `use`',
             },
             {
-                name: 'Leaderboard',
-                value: '`top` `top-cash` `top-bank` `top-rep` `top-xp`'
+                name: '<a:shb_em3_putas:1099847960180838514> Leaderboard',
+                value: '`top`'
             },
             {
-                name: 'Interaction',
+                name: '<a:shb_em3_putas:1099847960180838514> Interaction',
                 value: '`hug` `pat`',
             })
             .setThumbnail(message.guild.iconURL({ dynamic: true }))

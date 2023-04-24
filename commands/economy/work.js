@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
+const { error, success } = require('../lib/utils')
 
 module.exports = {
   name: "work",
@@ -7,16 +8,12 @@ module.exports = {
   auth: true,
   cooldown: 300000,
   run: async (client, message, args, usExists) => {
-    const random = Math.floor(Math.random() * 500) + 100;
-    const embed = new EmbedBuilder()
-      .setDescription(`You worked and earn **${random}** coins!`)
-      .setColor("#020202");
+    const random = Math.floor(Math.random() * 1300) + 100;
+ 
     await User.findOneAndUpdate(
       { userId: message.author.id },
       { cash: usExists.cash + Number(random) }
     );
-    await message.channel.send({
-      embeds: [embed],
-    });
+    await success(message, `You worked and earn **${random}** coins!`)
   },
 };
