@@ -14,7 +14,7 @@ module.exports = {
             .setDescription(`Hi **${message.author.username}** I'm **${client.user.username}**, just another average ${message.guild.name} bot`)
             .setFields({
                 name: '<a:shb_em3_putas:1099847960180838514> Profile', 
-                value: '`register` `profile` `nick-set` `bio-set` `emoji-set` `image-set` `color-set` `prefix-set` `pija` `changePija` `rank`',
+                value: '`register` `profile` `nick-set` `bio-set` `emoji-set` `image-set` `color-set` `prefix-set` `pija` `changePija` `rank` `marry` `divorce`',
             },
             {
                 name: '<a:shb_em3_putas:1099847960180838514> Economy',

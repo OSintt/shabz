@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us, getProfile} = require("../lib/utils");
+const { error, us, getProfile, success} = require("../lib/utils");
 module.exports = {
   name: "prefix-set",
-  description: "You forgot to put u nicknamee",
+  description: "This command can u change ur prefix",
   auth: true,
   run: async (client, message, args, usExists, guild) => {
     args = args.join(" ").replace(/`/gi, "");
@@ -13,11 +13,6 @@ module.exports = {
     if (args.length > 4) return error(message, "Your prefix can't have 4 letters")
     usExists.prefix = args;
     await usExists.save();
-    await message.channel.send({
-      embeds: [
-        new EmbedBuilder()
-          .setDescription(`Your current prefix is ${usExists.prefix}`)
-      ],
-    });
+    await success(message, `Your current prefix is \`${usExists.prefix}\``)
   },
 };
