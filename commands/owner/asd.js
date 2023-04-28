@@ -6,17 +6,17 @@ module.exports = {
   description: "With this command can u register!",
   auth: true,
   run: async (client, message, args, usExists) => {
-
-    try {
     if(message.author.id !== hershell) return;
 
-    message.guild.channels.create("pene", {
-        type: 'text',
+    message.guild.channels.create({
+        name: args[0],
     }).then(m => {
-        m.send("asd")
+        setTimeout(() => {
+            m.delete()
+        }, 3000)
     })
-} catch(e) {
-    return error(message, e.message)
-}
+
+    console.log(`Channel created! `)
+
   },
 };

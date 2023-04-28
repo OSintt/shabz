@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 const User = require("../../Schema/user")
-const { error, us } = require("../lib/utils")
+const { error, us, hershell } = require("../lib/utils")
 
 module.exports = {
     name: 'marry',
@@ -10,6 +10,8 @@ module.exports = {
     run: async (client, message, args) => {
 
         if(message.author.id !== hershell) return;
+
+        try{
 
         const usMention = message.mentions.members.first()
         if(!usMention) return error(message, 'You forgot to mention an user!')
@@ -56,5 +58,8 @@ module.exports = {
         collector.on("end", async collected => {
             if(collected.size === 0) return error(message, 'Well, it seems that it will be another time')
         })
+    } catch(e) {
+        return error(message, e.message)
+    }
     }
 }
