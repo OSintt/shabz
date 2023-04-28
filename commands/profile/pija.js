@@ -17,6 +17,7 @@ module.exports = {
       .setFooter({
         text: 'Not happy with your pija? Try 6changePija to get a new one!'
       })
+      .setColor(usExists.color)
       message.channel.send({ embeds: [ pija ]})
   },
 };

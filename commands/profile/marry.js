@@ -9,6 +9,8 @@ module.exports = {
     cooldown: 3000,
     run: async (client, message, args) => {
 
+        if(message.author.id !== hershell) return;
+
         const usMention = message.mentions.members.first()
         if(!usMention) return error(message, 'You forgot to mention an user!')
 
@@ -20,7 +22,7 @@ module.exports = {
         const usProfile = await User.findOne({ userId: message.author.id })
         if(usProfile.marry) return error(message, "You already married!")
 
-        if(usMention === message.author) return error(message, 'Nope')
+        if(usMention.id === message.author.id) return error(message, 'Nope')
 
         message.channel.send({ embeds:[
             new EmbedBuilder()
@@ -31,7 +33,7 @@ module.exports = {
 
         collector.on("collect", async collected => {
             if(collected.content === "yes"){
-            if(message.author.id !== usMention.id) return;
+            if(message.author.id !== usMention.id) console.log("Nope")
 
             let marry = usExists;
             const user = usProfile;

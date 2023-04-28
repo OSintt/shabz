@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error } = require("../lib/utils");
+const { error, hershell } = require("../lib/utils");
 
 module.exports = {
   name: "divorce",
@@ -8,9 +8,10 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
+    if(message.author.id !== hershell) return;
     if (!usExists.marry) return error(message, "You're not married yet!");
 
-    const marry = await User.findOne({ userId: usProfile.marry });
+    const marry = await User.findOne({ userId: usExists.marry });
 
     const embed = new EmbedBuilder().setDescription(
       `Are you sure want to get divorce from **${usUser.nick}?** **[yes/no]**`
@@ -23,7 +24,7 @@ module.exports = {
     );
 
     collector.on("collect", async (collected) => {
-      if (message.author.id !== usProfile.marry) return;
+      if (message.author.id !== usExists.marry) return;
       if (collected.content.toLowerCase() !== "yes")
         return error(message, "You made a good decision...");
       usExists.marry = null;

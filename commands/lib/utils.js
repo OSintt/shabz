@@ -45,17 +45,41 @@ const getProfile = async (message, userId, guild, mention) => {
       user.avatar ? user.avatar : mention.displayAvatarURL({ dynamic: true })
     )
     .setColor(user.color)
-    .setDescription(
-      `||${user.emoji}|| **Nick:** \`${user.nick}\` **Rep:** \`${
-        user.rep
-      }\`\n||${user.emoji}|| **Coins:** \`${
-        user.cash + user.bank
-      }\` **Items:** \`${guild.inventory.length}\`**Xp:** \`${user.xp}\`\n||${
-        user.emoji
-      }|| **Edater:** ${marry ? marry.nick : "Single!"}\n**Bio:** \`\`\`${
-        user.bio
-      }\`\`\`
-            `
+    .setFields({
+      name: `${user.emoji} Nick`,
+      value: `\`${user.nick}\``,
+      inline: true
+    },
+    {
+      name: `${user.emoji} Rep`,
+      value: `\`${user.rep}\``,
+      inline: true
+    },
+    {
+      name: `${user.emoji} Coins`,
+      value: `\`${user.cash + user.bank}\``,
+      inline: true
+    },
+    {
+      name: `${user.emoji} Items`,
+      value: `\`${guild.inventory.length}\``,
+      inline: true
+    },
+    {
+      name: `${user.emoji} Xp`,
+      value: `\`${user.xp}\``,
+      inline: true
+    },
+    {
+      name: `${user.emoji} Edater`,
+      value: `\`${marry ? marry.nick : "Single!"}\``,
+      inline: true
+    },
+    {
+      name: `${user.emoji} Bio`,
+      value: `\`\`\`${user.bio}\`\`\``,
+      inline: true
+    },
     )
     .setFooter({
       text: `Member since ${dayjs(user.birthday).format("D/M/YY - h:mma")}`,

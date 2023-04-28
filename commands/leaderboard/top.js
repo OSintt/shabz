@@ -15,6 +15,7 @@ module.exports = {
       cash: async () => (data = await User.find().sort({ cash: -1 })),
       pija: async () => (data = await User.find().sort({ pija: -1 })),
       bank: async () => (data = await User.find().sort({ bank: -1 })),
+      edater: async () => (data = await User.find().sort({ marry: -1})),
       def: () => (data = null),
     };
     await (getTop[args] || getTop["def"])();
@@ -31,7 +32,7 @@ module.exports = {
             u[args]
           }\``
       )
-      .join("\n")
+      .join("\n") || "Nope"
 
     const embed = new EmbedBuilder()
       .setTitle(`Users top in ${args}!`)

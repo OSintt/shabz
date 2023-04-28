@@ -8,7 +8,7 @@ module.exports = {
   auth: true,
   cooldown: 180000,
   run: async (client, message, args, usExists) => {
-    const crimeWin = Math.floor(Math.random() * 1300) + 1
+    const crimeWin = Math.floor(Math.random() * 1400) + 1
     const crimep = Math.floor(Math.random() * 950) + 1
     const probabilite = Math.floor(Math.random() * 100) + 1
 
