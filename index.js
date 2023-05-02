@@ -62,6 +62,7 @@ client.on("messageCreate", async (message) => {
     });
   }
   if (!message.content.startsWith(prefix)) return;
+  if(message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift();
   const cmd = client.commands.get(command);
@@ -92,7 +93,7 @@ client.on("messageCreate", async (message) => {
         xpdown.add(message.author.id);
         setTimeout(() => {
           xpdown.delete(message.author.id);
-        }, 4000);
+        }, 4000); 
       }
     }
     if (cmd.auth && !usExists)

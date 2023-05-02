@@ -12,6 +12,6 @@ module.exports = {
       { userId: message.author.id },
       { cash: usExists.cash + 2000 }
     );
-    return success(message, 'You received your `1000` daily coins! Keep working for more!');
+    return success(message, 'You received your `2000` daily coins! Keep working for more!');
   },
 };

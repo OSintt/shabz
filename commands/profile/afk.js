@@ -28,5 +28,7 @@ module.exports = {
 
     await usExists.save();
     return message.channel.send({ embeds: [embed] });
+
+    message.author.setNickname(`x { 🍩 }`)
   },
 };

@@ -15,7 +15,7 @@ module.exports = {
     }
     usExists.bio = args;
     await usExists.save();
-    return message.repy({
+    return message.reply({
       embeds: [await getProfile(message, usExists.userId, guild)],
     });
   },
