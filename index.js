@@ -33,15 +33,19 @@ client.on("ready", () => {
   client.user.setPresence({
     status: "dnd",
     game: {
-      name: "discord.gg/peru",
-    },
+      name: "discord.gg/shabz",
+      type: "WATCHING"
+    }
   });
+
+  client.channels.cache.get("1093910619318669363").send({ embeds: [ new EmbedBuilder().setDescription("Restarting").setColor(7900386)] })
 });
 
 client.on("messageCreate", async (message) => {
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
   const usExists = await User.findOne({ userId: message.author.id });
+
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
       userId: message.mentions.members.first().id,
@@ -53,6 +57,7 @@ client.on("messageCreate", async (message) => {
       await message.reply({ embeds: [embed] });
     }
   }
+
   const prefix = usExists ? usExists.prefix : '6';
   if (message.content.match(RegMention)) {
     message.reply({
@@ -61,6 +66,7 @@ client.on("messageCreate", async (message) => {
       ],
     });
   }
+
   if (!message.content.startsWith(prefix)) return;
   if(message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -82,6 +88,7 @@ client.on("messageCreate", async (message) => {
       if (usExists.afk.afk) {
         usExists.afk.afk = false;
         await usExists.save();
+        await message.member.setNickname("")
         message.reply({
           content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
         });

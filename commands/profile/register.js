@@ -32,11 +32,11 @@ module.exports = {
       pija,
     });
     await nuevo.save();
-    return message.channel
-      .send({
+    return message
+      .reply({
         embeds: [
           new EmbedBuilder().setDescription(
-            "Creating profile, wait a moment..."
+            "<a:keeodbailando:1094283156527521853> Creating profile, wait a moment..."
           ),
         ],
       })

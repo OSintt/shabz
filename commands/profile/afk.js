@@ -7,6 +7,9 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
     if (usExists.afk.afk) return;
+
+    await message.member.setNickname(`x { 🍩 }`)
+
     usExists.afk = {
       afk: true,
       reason: args.length !== 0 ? args.join(" ") : "discord.gg/peru",
@@ -29,6 +32,5 @@ module.exports = {
     await usExists.save();
     return message.channel.send({ embeds: [embed] });
 
-    message.author.setNickname(`x { 🍩 }`)
   },
 };

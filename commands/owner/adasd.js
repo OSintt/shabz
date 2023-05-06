@@ -10,5 +10,6 @@ module.exports = {
     if(message.author.id !== hershell) return;
 
     message.channel.send({ content: `${usExists.color}` })
+
   },
 };  

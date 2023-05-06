@@ -28,7 +28,7 @@ module.exports = {
             def: () => (data = null),
         };
         await (getCmds[args] || getCmds["def"])();
-        if(!data) return message.channel.send({ embeds: [
+        if(!data) return message.reply({ embeds: [
             new EmbedBuilder()
             .setDescription(`Hi **${message.author.username}** I'm **${client.user.username}**, just another average ${message.guild.name} bot`)
             .setFields({
@@ -47,6 +47,7 @@ module.exports = {
                 name: '<a:shb_em3_putas:1099847960180838514> Interaction',
                 value: '`hug` `pat`',
             })
+            .setColor(usExists.color ? usExists.color : "7900386")
             .setThumbnail(message.guild.iconURL({ dynamic: true }))
             .setTimestamp()
         ]})
