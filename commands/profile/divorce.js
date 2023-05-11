@@ -8,13 +8,13 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
-    if(message.author.id !== hershell) return;
-    if (!usExists.marry) return error(message, "You're not married yet!");
+    //if(message.author.id !== hershell) return;
+    if (!usExists.marry.is) return error(message, "You're not married yet!");
 
-    const marry = await User.findOne({ userId: usExists.marry });
+    const marry = await User.findOne({ userId: usExists.marry.userId });
 
     const embed = new EmbedBuilder().setDescription(
-      `Are you sure want to get divorce from **${usUser.nick}?** **[yes/no]**`
+      `Are you sure want to get divorce from **${marry.nick}?** **[yes/no]**`
     );
     message.channel.send({ embeds: [embed] });
 
@@ -24,18 +24,19 @@ module.exports = {
     );
 
     collector.on("collect", async (collected) => {
-      if (message.author.id !== usExists.marry) return;
-      if (collected.content.toLowerCase() !== "yes")
-        return error(message, "You made a good decision...");
-      usExists.marry = null;
-      marry.marry = null;
-      await usExists.save();
-      await marry.save();
-      error(
-        message,
-        `You've just got divorced from ${marry.nick}! I hope you don't regret soon :(`
-      );
-      return collector.stop();
+      if (collected.author.id === usExists.userId) {
+        if (collected.content.toLowerCase() !== "yes")
+          return error(message, "You made a good decision...");
+        usExists.marry = null;
+        marry.marry = null;
+        await usExists.save();
+        await marry.save();
+        error(
+          message,
+          `You've just got divorced from ${marry.nick}! I hope you don't regret soon :(`
+        );
+        return collector.stop();
+      }
     });
 
     collector.on("end", async (collected) => {
