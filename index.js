@@ -44,7 +44,7 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
 
   if(message.author.bot) return;
-  
+
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
   const usExists = await User.findOne({ userId: message.author.id });
@@ -70,10 +70,10 @@ client.on("messageCreate", async (message) => {
     });
   }
 
-  if (usExists.afk.afk) {
+   if (usExists.afk.afk) {
     usExists.afk.afk = false;
     await usExists.save();
-    await message.member.setNickname("")
+    await message.member.setNickname("");
     message.reply({
       content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
     });
