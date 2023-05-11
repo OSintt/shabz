@@ -42,6 +42,9 @@ client.on("ready", () => {
 });
 
 client.on("messageCreate", async (message) => {
+
+  if(message.author.bot) return;
+  
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
   const usExists = await User.findOne({ userId: message.author.id });
@@ -67,8 +70,16 @@ client.on("messageCreate", async (message) => {
     });
   }
 
+  if (usExists.afk.afk) {
+    usExists.afk.afk = false;
+    await usExists.save();
+    await message.member.setNickname("")
+    message.reply({
+      content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
+    });
+  }
+
   if (!message.content.startsWith(prefix)) return;
-  if(message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift();
   const cmd = client.commands.get(command);
@@ -85,18 +96,11 @@ client.on("messageCreate", async (message) => {
         usExists.servers.push({ server: server._id, inventory: [] });
       }
       guild = await usExists.servers.find((s) => s.server === server._id);
-      if (usExists.afk.afk) {
-        usExists.afk.afk = false;
-        await usExists.save();
-        await message.member.setNickname("")
-        message.reply({
-          content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
-        });
-      }
       if (!xpdown.has(message.author.id)) {
         let xplist = [15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 29, 30, 35];
         xp = Math.floor(Math.random() * xplist.length);
         usExists.xp = usExists.xp + xp;
+        await usExists.save();
         xpdown.add(message.author.id);
         setTimeout(() => {
           xpdown.delete(message.author.id);

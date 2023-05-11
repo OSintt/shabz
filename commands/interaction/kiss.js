@@ -16,7 +16,7 @@ module.exports = {
       userId: mention.id,
     });
     if (!mention) return error(message, "This user is not registered yet!");
-    if (mention === message.author) return error(message, "Nope");
+    if (message.mentions.members.first().id === message.author.id) return error(message, "Nope");
     const kiss = usExists.kisses.find((k) => k.userId === mention.userId);
     if (!kiss) {
       usExists.kisses.push({

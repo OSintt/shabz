@@ -52,7 +52,7 @@ const getProfile = async (message, userId, guild, mention) => {
         user.cash + user.bank
       }\` **Items:** \`${guild.inventory.length}\`**Xp:** \`${user.xp}\`\n||${
         user.emoji
-      }|| **Edater:** ${marry ? marry.nick : "Single!"}\n**Bio:** \`\`\`${
+      }|| **Edater:** \`${marry ? marry.nick : "Single!"}\`\n**Bio:** \`\`\`${
         user.bio
       }\`\`\`
             `

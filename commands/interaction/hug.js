@@ -16,6 +16,8 @@ module.exports = {
         const usExists = await User.findOne({ userId: message.mentions.members.first().id })
         if(!usExists) return error(message, 'Try 6 register first!')    
 
+        if(usMention.id === message.author.id) return error(message, 'Nope')
+
         usExists.hugs = usExists.hugs + 1;
         await usExists.save();
 

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us } = require("../lib/utils");
+const { error, us, success } = require("../lib/utils");
 module.exports = {
   name: "changePija",
   description: "You forgot to put u nicknamee",
@@ -10,6 +10,6 @@ module.exports = {
     if (usExists.cash < 5000) return error(message, "You don't have the enough coins to change your pija's length!");
     usExists.pija = Math.round(Math.random() * 69);
     await usExists.save();
-    error(message, "Your new pija's length is: " + usExists.pija);
+    success(message, "Your new pija's length is: " + usExists.pija);
   },
 };

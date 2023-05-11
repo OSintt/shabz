@@ -14,6 +14,8 @@ module.exports = {
         const usUser = await User.findOne({ userId: message.mentions.members.first().id })
         if(!usUser) return error(message, 'Try 6 register first!')
 
+        if(usMention.id === message.author.id) return error(message, 'Nope')
+
         usUser.pats = usUser.pats + 1;
         await usExists.save();
 

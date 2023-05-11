@@ -8,7 +8,7 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
-    if (message.author.id !== "982390723716476928") return;
+    // if (message.author.id !== "982390723716476928") return;
 
     try {
       let mention = message.mentions.members.first();
