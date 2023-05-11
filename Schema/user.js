@@ -72,10 +72,7 @@ const UserSchema = new Schema({
   },
   kisses: [
     {
-        user: {
-            type: Types.ObjectId,
-            ref: 'User'
-        },
+        userId: String,
         n: Number
     }
   ],
