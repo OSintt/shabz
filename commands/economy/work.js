@@ -8,7 +8,7 @@ module.exports = {
   auth: true,
   cooldown: 300000,
   run: async (client, message, args, usExists) => {
-    const random = Math.floor(Math.random() * 1000) + 1;
+    const random = Math.round(Math.random() * 1000) + 1;
  
     await User.findOneAndUpdate(
       { userId: message.author.id },

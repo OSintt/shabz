@@ -44,7 +44,7 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
 
   if(message.author.bot) return;
-  
+
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
   const usExists = await User.findOne({ userId: message.author.id });
