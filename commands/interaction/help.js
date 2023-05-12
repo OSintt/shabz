@@ -37,7 +37,7 @@ module.exports = {
             },
             {
                 name: '<a:shb_em3_putas:1099847960180838514> Economy',
-                value: '`work` `daily` `crime` `slut` `dep` `with` `pay` `rep` `rob` `shop` `buy` `use`',
+                value: '`work` `daily` `crime` `slut` `dep` `with` `pay` `rep` `rob` `hen` `shop` `buy` `use`',
             },
             {
                 name: '<a:shb_em3_putas:1099847960180838514> Leaderboard',

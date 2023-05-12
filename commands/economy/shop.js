@@ -19,7 +19,9 @@ module.exports = {
       name: message.guild.name + " Store!",
       iconURL: message.guild.iconURL({ dynamic: true })
     })
-    .setDescription(`${usExists.emoji} ${shop}`)
+    .setTitle('Use `6buy`!')
+    .setDescription(`${usExists.emoji} **Hen** | **Price:** __2000__ coins!\n\`With this item can you bet!\``)
+    .setThumbnail(message.guild.iconURL({ dynamic: true }))
     .setColor(usExists.color)
     .setTimestamp()
     
