@@ -7,6 +7,7 @@ module.exports = {
   description: "With this command u can robbed others users!",
   auth: true,
   mention: true,
+  author: true,
   cooldown: 300000,
   run: async (client, message, args, usExists) => {
     const usMention = message.mentions.users.first();

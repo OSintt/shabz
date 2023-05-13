@@ -7,6 +7,7 @@ module.exports = {
     name: 'hug',
     description: 'With this command u can hugs!',
     auth: true,
+    author: true,
     cooldown: 3000,
     run: async (client, message, args) =>{
     
@@ -15,8 +16,6 @@ module.exports = {
         if(!usMention) return error(message, 'Forgot mentioned an user!')
         const usExists = await User.findOne({ userId: message.mentions.members.first().id })
         if(!usExists) return error(message, 'Try 6 register first!')    
-
-        if(usMention.id === message.author.id) return error(message, 'Nope')
 
         usExists.hugs = usExists.hugs + 1;
         await usExists.save();

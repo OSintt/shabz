@@ -8,6 +8,7 @@ module.exports = {
   description: "With this command u can kiss!",
   auth: true,
   mention: true,
+  author: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
     let mention = message.mentions.members.first();
@@ -16,7 +17,6 @@ module.exports = {
       userId: mention.id,
     });
     if (!mention) return error(message, "This user is not registered yet!");
-    if (message.mentions.members.first().id === message.author.id) return error(message, "Nope");
     const kiss = usExists.kisses.find((k) => k.userId === mention.userId);
     if (!kiss) {
       usExists.kisses.push({

@@ -6,6 +6,7 @@ module.exports = {
   name: "pay",
   description: "With this command u can take-out money!",
   auth: true,
+  author: true,
   run: async (client, message, args, usExists) => {
     try {
       args[0] = checkInt(usExists.cash, 'pay', args);

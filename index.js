@@ -48,6 +48,7 @@ client.on("messageCreate", async (message) => {
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
   const usExists = await User.findOne({ userId: message.author.id });
+  const mention = message.mentions.members.first();
 
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
@@ -111,6 +112,8 @@ client.on("messageCreate", async (message) => {
       return error(message, "You are not registered yet!");
     if (cmd.mention && !message.mentions.members.first())
       return error(message, "You forgot to mention an user!");
+    if (cmd.author && mention.id === message.author.id)
+      return error(message, 'Nope')
     if (cmd.cooldown) {
       if (Time.has(`${cmd.name}${message.author.id}`))
         return error(

@@ -7,14 +7,13 @@ module.exports = {
     name: 'pat',
     description: 'With this command can u pats!',
     auth: true,
+    author: true,
     cooldown: 3000,
     run: async (client, message, args, usExists) =>{
         const usMention = message.mentions.members.first()
         if(!usMention) return error(message, 'Forgot mentioned an user!')
         const usUser = await User.findOne({ userId: message.mentions.members.first().id })
         if(!usUser) return error(message, 'Try 6 register first!')
-
-        if(usMention.id === message.author.id) return error(message, 'Nope')
 
         usUser.pats = usUser.pats + 1;
         await usExists.save();
