@@ -20,7 +20,7 @@ module.exports = {
       iconURL: message.guild.iconURL({ dynamic: true })
     })
     .setTitle('Use `6buy`!')
-    .setDescription(`${usExists.emoji} **Hen** | **Price:** __2000__ coins!\n\`With this item can you bet!\``)
+    .setDescription(`${usExists.emoji} **Hen** | **Price:** __2000__ coins!\n\`With this item can you bet!\`\n\n ${usExists.emoji} **6changePija** | **Price:** __5000__ coins! \n\`With this item can change your pija's length!\``)
     .setThumbnail(message.guild.iconURL({ dynamic: true }))
     .setColor(usExists.color)
     .setTimestamp()
