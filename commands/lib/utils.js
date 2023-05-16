@@ -15,38 +15,6 @@ const success = async (message, msg, usExists) => {
   });
 };
 
-const winner = async (message, msg, msgu, usExists) => {
-  usExists = await User.findOne({ userId: message.author.id })
-  message.reply({
-    embeds: [new EmbedBuilder().setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })}).setFields({
-      name: "I'm",
-      value: msg,
-      inline: true
-    }, {
-      name: "You",
-      value: msgu,
-      inline: true
-    })
-  .setColor(usExists.color)]
-  })
-}
-
-const lost = async (message, msg, msgu, usExists) => {
-  usExists = await User.findOne({ userId: message.author.id })
-  message.reply({
-    embeds: [new EmbedBuilder().setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })}).setFields({
-      name: "I'm",
-      value: msg,
-      inline: true
-    }, {
-      name: "You",
-      value: msgu,
-      inline: true
-    })
-  .setColor("FF0000")]
-  })
-}
-
 const checkInt = (coins, text, args) => {
   if (args.length === 0)
     throw new Error(`You forgot to enter how much you want to ${text}!`);
@@ -94,4 +62,4 @@ const getProfile = async (message, userId, guild, mention) => {
     });
 };
 const hershell = "793161028988960798";
-module.exports = { hershell, error, success, winner, lost, getProfile, checkInt };
+module.exports = { hershell, error, success, getProfile, checkInt };

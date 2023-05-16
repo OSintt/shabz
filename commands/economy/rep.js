@@ -16,8 +16,10 @@ module.exports = {
     const usUser = await User.findOne({ userId: usMention.id });
     if (!usUser) return error(message, "This user is not registed yet!");
 
-    if(usUser.rep >= 1) {
-      usUser.rep = usUser.rep -1;
+    if(usExists.rep >= 1) {
+      usUser.rep = usUser.rep + 1;
+      usExists.rep = usExists.rep -1;
+      await usExists.save();
       await usUser.save();
 
       return success(message, `You just have given \`1\` rep to **${usUser.nick}**`)

@@ -81,6 +81,7 @@ const UserSchema = new Schema({
       type: Boolean,
       default: false,
     },
+    date: Date,
     reason: String,
   },
   birthday: {

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const User = require("../../Schema/user");
-const { error, us, checkInt, success, winner, lost, hershell } = require("../lib/utils");
+const { error, us, checkInt, success, hershell } = require("../lib/utils");
 
 module.exports = {
   name: "bet",
@@ -9,8 +9,6 @@ module.exports = {
   run: async (client, message, args, usExists) => {
 
     try {
-
-        if(message.author.id !== hershell) return;
 
         const Myd = ["✌️", "👊", "🤚"]
 
@@ -28,24 +26,103 @@ module.exports = {
         usExists.cash -= args[0];
         await usExists.save();
 
-        lost(message, `\`${bot}\``, `\`${user}\``)
+        message.reply({
+            embeds: [new EmbedBuilder().setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })}).setFields({
+              name: "I'm",
+              value: `\`${bot}\``,
+              inline: true
+            }, {
+              name: "You",
+              value: `\`${user}\``,
+              inline: true
+            })
+          .setColor("FF0000")]
+          })
+
     } else if (user === '✌️' && bot === '🤚') {
         usExists.cash += args[0];
         await usExists.save();
 
-        winner(message, `\`${bot}\``, `\`${user}\``)
+        message.reply({
+            embeds: [new EmbedBuilder().setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })}).setFields({
+              name: "I'm",
+              value: `\`${bot}\``,
+              inline: true
+            }, {
+              name: "You",
+              value: `\`${user}\``,
+              inline: true
+            })
+          .setColor(usExists.color)]
+          })
+
     } else if (user === '👊' && bot === '🤚') {
 
         usExists.cash -= args[0];
         await usExists.save();
 
-        lost(message, `\`${bot}\``, `\`${user}\``)
+        message.reply({
+            embeds: [new EmbedBuilder().setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })}).setFields({
+              name: "I'm",
+              value: `\`${bot}\``,
+              inline: true
+            }, {
+              name: "You",
+              value: `\`${user}\``,
+              inline: true
+            })
+          .setColor("FF0000")]
+          })
+
     } else if (user === '👊' && bot === '✌️') {
 
         usExists.cash += args[0];
         await usExists.save();
 
-        winner(message, `\`${bot}\``, `\`${user}\``)
+        message.reply({
+            embeds: [new EmbedBuilder().setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })}).setFields({
+              name: "I'm",
+              value: `\`${bot}\``,
+              inline: true
+            }, {
+              name: "You",
+              value: `\`${user}\``,
+              inline: true
+            })
+          .setColor(usExists.color)]
+          })
+    } else if (user === '🤚' && bot === '👊') {
+        usExists.cash += args[0];
+        await usExists.save();
+
+        message.reply({
+            embeds: [new EmbedBuilder().setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })}).setFields({
+              name: "I'm",
+              value: `\`${bot}\``,
+              inline: true
+            }, {
+              name: "You",
+              value: `\`${user}\``,
+              inline: true
+            })
+          .setColor(usExists.color)]
+          })
+    } else if (user === '👊' && bot === '✌️') {
+        usExists.cash += args[0];
+        await usExists.save();
+
+        message.reply({
+            embeds: [new EmbedBuilder().setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })}).setFields({
+              name: "I'm",
+              value: `\`${bot}\``,
+              inline: true
+            }, {
+              name: "You",
+              value: `\`${user}\``,
+              inline: true
+            })
+          .setColor(usExists.color)]
+          })
     }
 
     } catch(e) {

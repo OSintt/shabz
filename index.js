@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 const client = new Client({ intents: [3276799] });
 const fs = require("fs");
 const ms = require("ms");
+const dayjs = require("dayjs")
 const xpdown = new Set();
 
 const Time = new Discord.Collection();
@@ -56,7 +57,7 @@ client.on("messageCreate", async (message) => {
     });
     if (mentioned && mentioned.afk.afk) {
       const embed = new EmbedBuilder().setDescription(
-        `**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}`
+        `**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}\n**Date:** ${dayjs(mentioned.afk.date).format("h:mma")}`
       );
       await message.reply({ embeds: [embed] });
     }
