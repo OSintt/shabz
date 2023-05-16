@@ -10,8 +10,7 @@ module.exports = {
     author: true,
     cooldown: 3000,
     run: async (client, message, args) =>{
-    
-
+        try {
         const usMention = message.mentions.members.first()
         if(!usMention) return error(message, 'Forgot mentioned an user!')
         const usExists = await User.findOne({ userId: message.mentions.members.first().id })
@@ -20,10 +19,13 @@ module.exports = {
         usExists.hugs = usExists.hugs + 1;
         await usExists.save();
 
-        message.channel.send({ embeds:[
+        message.reply({ embeds:[
             new EmbedBuilder()
             .setDescription(`**${message.author.username}** has a hugger to **${usMention.user.username}**\n*${usMention.user.username}* has received *${usExists.hugs}* hug in total `)
             .setImage(star.hug())
         ]})
+    } catch(e) {
+        return error(message, e.message)
+    }
     }
 }

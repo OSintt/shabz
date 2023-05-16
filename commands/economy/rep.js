@@ -10,10 +10,18 @@ module.exports = {
   author: true,
   cooldown: 86400000,
   run: async (client, message, args, usExists) => {
+    try {
     const usMention = message.mentions.members.first();
 
     const usUser = await User.findOne({ userId: usMention.id });
     if (!usUser) return error(message, "This user is not registed yet!");
+
+    if(usUser.rep >= 1) {
+      usUser.rep = usUser.rep -1;
+      await usUser.save();
+
+      return success(message, `You just have given \`1\` rep to **${usUser.nick}**`)
+    }
 
     usUser.rep = usUser.rep + 1;
     await usUser.save();
@@ -21,6 +29,9 @@ module.exports = {
     return success(
       message,
       `You just have given \`1\` rep to **${usUser.nick}**`
-    );
+    )
+    } catch(e) {
+      return error(message, e.message)
+    }
   },
 };

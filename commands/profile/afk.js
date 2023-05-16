@@ -6,6 +6,8 @@ module.exports = {
   description: "With this command can u register!",
   auth: true,
   run: async (client, message, args, usExists) => {
+
+    try {
     if (usExists.afk.afk) return;
 
     await message.member.setNickname(`x { 🍩 }`)
@@ -30,7 +32,11 @@ module.exports = {
             .setFooter({ text: "I will notify those who mention u!" });
 
     await usExists.save();
-    return message.channel.send({ embeds: [embed] });
+    return message.reply({ embeds: [embed] });
+
+  } catch(e) {
+    return console.log(message, e.message)
+  }
 
   },
 };

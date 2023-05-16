@@ -8,6 +8,7 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
+    try {
     args = args[0];
     const mention = message.mentions.users.first() || message.author;
     const user = await User.findOne({ userId: mention.id });
@@ -34,6 +35,9 @@ module.exports = {
       )
       .setThumbnail(user.avatar);
 
-    message.channel.send({ embeds: [embed] });
+    message.channel.send({ embeds: [embed] })
+      } catch(e) {
+        return error(message, e.message)
+      }
   },
 };

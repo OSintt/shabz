@@ -10,6 +10,7 @@ module.exports = {
     author: true,
     cooldown: 3000,
     run: async (client, message, args, usExists) =>{
+        try {
         const usMention = message.mentions.members.first()
         if(!usMention) return error(message, 'Forgot mentioned an user!')
         const usUser = await User.findOne({ userId: message.mentions.members.first().id })
@@ -18,10 +19,13 @@ module.exports = {
         usUser.pats = usUser.pats + 1;
         await usExists.save();
 
-        message.channel.send({ embeds:[
+        message.reply({ embeds:[
             new EmbedBuilder()
             .setDescription(`**${message.author.username}** stroked to **${usMention.user.username}**\n${usMention.user.username} has received ${usUser.pats} pat in total `)
             .setImage(star.pat())
         ]})
+    } catch(e) {
+        return error(message, e.message)
+    }
     }
 }

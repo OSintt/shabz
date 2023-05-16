@@ -7,6 +7,7 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
+    try {
     args = args[0];
     if (!args) return error(message, "You forgot to put your new emoji!");
     if (
@@ -25,6 +26,9 @@ module.exports = {
             embeds: [await getProfile(message, usExists.userId, guild)],
           });
         }, 1000);
-      });
+      })
+    } catch(e) {
+      return error(message, e.message)
+    }
   },
 };
