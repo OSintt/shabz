@@ -7,30 +7,22 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
     if (usExists.afk.afk) return;
-
-    await message.member.setNickname(`x { 🍩 }`)
+    
+    await message.member.setNickname(`x { 🍩 } ${message.author.nick ? message.author.nick : message.author.username}`)
+      .catch(() => console.log('owo'));
 
     usExists.afk = {
       afk: true,
-      reason: args.length !== 0 ? args.join(" ") : "discord.gg/peru",
+      reason: args.length !== 0 ? args.join(" ") : "discord.gg/shabz",
     };
-    const embed =
-      usExists.language === "Spanish"
-        ? new EmbedBuilder()
-            .setAuthor({ name: message.author.tag })
-            .setTitle("Afk Establecido")
-            .setDescription(`**Razón:** ${usExists.afk.reason}`)
-            .setColor(usExists.color)
-            .setFooter({ text: "Avisaré a los que te mencionen!" })
-        : new EmbedBuilder()
-            .setAuthor({ name: message.author.tag })
-            .setTitle("Afk Established")
-            .setDescription(`**Reason:** ${usExists.afk.reason}`)
-            .setColor(usExists.color)
-            .setFooter({ text: "I will notify those who mention u!" });
+    const embed = new EmbedBuilder()
+      .setAuthor({ name: message.author.tag })
+      .setTitle("Afk Established")
+      .setDescription(`**Reason:** ${usExists.afk.reason}`)
+      .setColor(usExists.color)
+      .setFooter({ text: "I will notify those who mention u!" });
 
     await usExists.save();
     return message.channel.send({ embeds: [embed] });
-
   },
 };

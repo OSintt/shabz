@@ -34,18 +34,28 @@ client.on("ready", () => {
     status: "dnd",
     game: {
       name: "discord.gg/shabz",
-      type: "WATCHING"
-    }
+      type: "WATCHING",
+    },
   });
 
-  client.channels.cache.get("1093910619318669363").send({ embeds: [ new EmbedBuilder().setDescription("Restarting").setColor(7900386)] })
+  client.channels.cache.get("1093910619318669363").send({
+    embeds: [new EmbedBuilder().setDescription("Restarting").setColor(7900386)],
+  });
 });
 
 client.on("messageCreate", async (message) => {
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
   const usExists = await User.findOne({ userId: message.author.id });
-
+  if (usExists.afk.afk) {
+    usExists.afk.afk = false;
+    await usExists.save();
+    await message.member.setNickname(null)
+      .catch(() => console.log('owo'));
+    message.reply({
+      content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
+    });
+  }
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
       userId: message.mentions.members.first().id,
@@ -58,17 +68,19 @@ client.on("messageCreate", async (message) => {
     }
   }
 
-  const prefix = usExists ? usExists.prefix : '6';
+  const prefix = usExists ? usExists.prefix : "6";
   if (message.content.match(RegMention)) {
     message.reply({
       embeds: [
-      new EmbedBuilder().setDescription(`My prefix is \`${prefix}\``).setColor(1146986),
+        new EmbedBuilder()
+          .setDescription(`My prefix is \`${prefix}\``)
+          .setColor(1146986),
       ],
     });
   }
 
   if (!message.content.startsWith(prefix)) return;
-  if(message.author.bot) return;
+  if (message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift();
   const cmd = client.commands.get(command);
@@ -85,14 +97,6 @@ client.on("messageCreate", async (message) => {
         usExists.servers.push({ server: server._id, inventory: [] });
       }
       guild = await usExists.servers.find((s) => s.server === server._id);
-      if (usExists.afk.afk) {
-        usExists.afk.afk = false;
-        await usExists.save();
-        await message.member.setNickname("")
-        message.reply({
-          content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
-        });
-      }
       if (!xpdown.has(message.author.id)) {
         let xplist = [15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 29, 30, 35];
         xp = Math.floor(Math.random() * xplist.length);
@@ -100,7 +104,7 @@ client.on("messageCreate", async (message) => {
         xpdown.add(message.author.id);
         setTimeout(() => {
           xpdown.delete(message.author.id);
-        }, 4000); 
+        }, 4000);
       }
     }
     if (cmd.auth && !usExists)
