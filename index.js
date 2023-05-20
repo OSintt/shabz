@@ -47,7 +47,7 @@ client.on("messageCreate", async (message) => {
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
   const usExists = await User.findOne({ userId: message.author.id });
-  if (usExists.afk.afk) {
+  if (usExists && usExists.afk.afk) {
     usExists.afk.afk = false;
     await usExists.save();
     await message.member.setNickname(null)
