@@ -8,6 +8,7 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
+    try {
     //if(message.author.id !== hershell) return;
     if (!usExists.marry.is) return error(message, "You're not married yet!");
 
@@ -42,6 +43,9 @@ module.exports = {
     collector.on("end", async (collected) => {
       if (collected.size === 0) return error(message, "Time is over...");
       return collector.stop();
-    });
+    })
+  } catch(e) {
+    return error(message, e.message)
+  }
   },
 };

@@ -6,6 +6,7 @@ module.exports = {
   name: "register",
   description: "With this command can u register!",
   run: async (client, message, args, usExists, guild) => {
+    try {
     if (usExists) return error(message, "You're alredy registered!");
     const server = await Server.findOne({ guildId: message.guild.id });
     const pija = Math.round(Math.random() * 39);
@@ -48,6 +49,9 @@ module.exports = {
             ],
           });
         }, 1000);
-      });
+      })
+    } catch(e) {
+      return error(message, e.message)
+    }
   },
 };

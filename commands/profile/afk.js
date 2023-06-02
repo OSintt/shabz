@@ -7,13 +7,18 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
     if (usExists.afk.afk) return;
-    
-    await message.member.setNickname(`x { 🍩 } ${message.author.nick ? message.author.nick : message.author.username}`)
-      .catch(() => console.log('owo'));
+
+    await message.member
+      .setNickname(
+        `x { 🍩 } ${
+          message.author.nick ? message.author.nick : message.author.username
+        }`
+      )
+      .catch(() => console.log("owo"));
 
     usExists.afk = {
       afk: true,
-      reason: args.length !== 0 ? args.join(" ") : "discord.gg/shabz",
+      reason: args.length !== 0 ? args.join(" ") : "discord.gg/peru",
     };
     const embed = new EmbedBuilder()
       .setAuthor({ name: message.author.tag })

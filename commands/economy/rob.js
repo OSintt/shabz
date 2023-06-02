@@ -7,8 +7,10 @@ module.exports = {
   description: "With this command u can robbed others users!",
   auth: true,
   mention: true,
+  author: true,
   cooldown: 300000,
   run: async (client, message, args, usExists) => {
+    try {
     const usMention = message.mentions.users.first();
 
     const usUser = await User.findOne({ userId: usMention.id });
@@ -37,6 +39,9 @@ module.exports = {
       );
     }
     await usUser.save();
-    return await usExists.save();
+    return await usExists.save()
+  } catch(e) {
+    return error(message, e.message)
+  }
   },
 };

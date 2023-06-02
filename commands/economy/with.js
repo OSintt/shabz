@@ -11,7 +11,7 @@ module.exports = {
     try {
       args[0] = checkInt(usExists.bank, "with", args)
       usExists.bank -= args[0];
-      usExists.cash = args[0];
+      usExists.cash += args[0];
       await usExists.save();
 
       return message.reply({ embeds: [

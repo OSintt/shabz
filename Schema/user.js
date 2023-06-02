@@ -81,11 +81,18 @@ const UserSchema = new Schema({
       type: Boolean,
       default: false,
     },
+    date: Date,
     reason: String,
   },
   birthday: {
     type: Date,
     default: new Date()
+  },
+  hen: {
+    hen: {
+        type: Boolean,
+        default: false,
+    }
   }
 });
 module.exports = model("User", UserSchema);

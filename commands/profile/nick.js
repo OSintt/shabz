@@ -7,6 +7,7 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
+    try {
     args = args.join(" ").replace(/`/gi, "");
     args = args.replace(/\*/gi, "");
     args = args.replace(/\n/gi, " ");
@@ -18,6 +19,9 @@ module.exports = {
     await usExists.save();
     await message.reply({
       embeds: [await getProfile(message, usExists.userId, guild)],
-    });
+    })
+  } catch(e) {
+    return error(message, e.message)
+  }
   },
 };

@@ -17,7 +17,7 @@ module.exports = {
         await usExists.save();
         return error(message, `You have been fined \`${slutp}\` coins for trying to slut!`)
     }
-    if(probabilite < 67){
+    if(probabilite <= 67){
         usExists.cash = usExists.cash - Number(slutp);
         await usExists.save();
         return error(message, `You have been fined \`${slutp}\` coins for trying to slut!`)

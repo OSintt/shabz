@@ -7,6 +7,7 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
+    try {
     args = args.join(" ").replace(/`/gi, "");
     args = args.replace(/\n/gi, " ").trim();
     if (!args) return error(message, "You forgot to put ur new bio!");
@@ -15,8 +16,11 @@ module.exports = {
     }
     usExists.bio = args;
     await usExists.save();
-    return message.reply({
+    return success({
       embeds: [await getProfile(message, usExists.userId, guild)],
-    });
+    })
+  } catch(e) {
+    return error(message, e.message)
+  }
   },
 };

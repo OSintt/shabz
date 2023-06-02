@@ -6,6 +6,7 @@ module.exports = {
   description: "You can see your bal",
   cooldown: 3000,
   run: async (client, message, usExists, args) => {
+    try {
     const usMention = message.mentions.users.first() || message.author;
     const data = await User.findOne({ userId: usMention.id });
     if (!data) return error(message, "Try 6register first!");
@@ -37,8 +38,11 @@ module.exports = {
           inline: true,
         }
       );
-    return message.channel.send({
+    return message.reply({
       embeds: [embed],
-    });
+    })
+  } catch(e) {
+    return error(message, e.message)
+  }
   },
 };

@@ -11,7 +11,7 @@ module.exports = {
     const user = message.mentions.users.first() || message.author;
     const data = await User.findOne({ userId: user.id });
     if (!data) return error(message, "Try 6register first!");
-    await message.channel.send({
+    await message.reply({
       embeds: [await getProfile(message, data.userId, guild, user)],
     });
     } catch(e) {

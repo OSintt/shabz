@@ -8,15 +8,16 @@ module.exports = {
   description: "With this command u can kiss!",
   auth: true,
   mention: true,
+  author: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
+    try {
     let mention = message.mentions.members.first();
     if (!mention) return error(message, 'You have to mention someone to kiss!');
     mention = await User.findOne({
       userId: mention.id,
     });
     if (!mention) return error(message, "This user is not registered yet!");
-    if (mention === message.author) return error(message, "Nope");
     const kiss = usExists.kisses.find((k) => k.userId === mention.userId);
     if (!kiss) {
       usExists.kisses.push({
@@ -34,7 +35,7 @@ module.exports = {
     await usExists.save();
     await mention.save();
 
-    message.channel.send({
+    message.reply({
       embeds: [
         new EmbedBuilder()
           .setDescription(
@@ -42,6 +43,9 @@ module.exports = {
           )
           .setImage(star.kiss()),
       ],
-    });
+    })
+  } catch(e) {
+    return error(message, e.message)
+  }
   },
 };

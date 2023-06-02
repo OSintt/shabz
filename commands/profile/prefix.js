@@ -6,6 +6,7 @@ module.exports = {
   description: "This command can u change ur prefix",
   auth: true,
   run: async (client, message, args, usExists, guild) => {
+    try {
     args = args.join(" ").replace(/`/gi, "");
     args = args.replace(/\*/gi, "");
     args = args.replace(/\n/gi, " ");
@@ -14,5 +15,8 @@ module.exports = {
     usExists.prefix = args;
     await usExists.save();
     await success(message, `Your current prefix is \`${usExists.prefix}\``)
+    } catch(e) {
+      return error(message, e.message)
+    }
   },
 };

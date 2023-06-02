@@ -7,6 +7,7 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
+    try {
     args = args[0];
     if (!args) return error(message, "You forgot to put your new color!");
     if (!args.match(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i))
@@ -16,6 +17,9 @@ module.exports = {
 
     message.channel.send({
       embeds: [await getProfile(message, usExists.userId, guild)],
-    });
+    })
+  } catch(e) {
+    return error(message, e.message)
+  }
   },
 };
