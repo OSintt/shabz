@@ -7,28 +7,22 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
-
-    if(message.author.id !== hershell) return;
+    if (message.author.id !== hershell) return;
     try {
-    dato = args[0];
-    let data;
-    const getTop = {
-      nick: async () => (data = await User.find({ userId: usExists.id })),
-      def: () => (data = null),
-    };
-    await (getTop[dato] || getTop["def"])();
-    if (!data)
-      return error(
-        message,
-        "__**Usage:**__:\n`6set <nick | avatar | emoji | bio | color | prefix>`"
-      );
-
-      usExists.nick = args.slice(1).join(' ')
+      dato = args[0];
+      const options = ["nick", "avatar", "emoji", "bio", "color", "prefix"];
+      if (!data)
+        return error(
+          message,
+          "__**Usage:**__:\n`6set <nick | avatar | emoji | bio | color | prefix>`"
+        );
+      if (message)
+      usExists[dato] = args.slice(1);
       await usExists.save();
 
-      message.reply({ content: usExists.nick })
-    } catch(e) {
-        return error(message, e.message)
+      message.reply({ content: usExists.nick });
+    } catch (e) {
+      return error(message, e.message);
     }
   },
 };
