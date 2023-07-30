@@ -19,7 +19,7 @@ module.exports = {
     if (usMention === message.author) return error(message, "Nope");
     if (usUser.cash < 1) return error(message, "This user nove have money!");
 
-    const getRob = (us) => Math.round(us.cash * ((Math.random() * 15) / 100));
+    const getRob = (us) => Math.round(us.cash * ((Math.random() * 50) / 100));
     const probabilite = Math.floor(Math.random() * 3);
     console.log(probabilite);
     if (probabilite <= 1) {

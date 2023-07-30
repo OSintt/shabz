@@ -3,18 +3,15 @@ const User = require("../../Schema/user");
 const { error, hershell, us } = require("../lib/utils");
 const Server = require("../../Schema/server");
 module.exports = {
-  name: "addEmoji",
+  name: "emojis",
   description: "With this command can u create item!",
   auth: true,
   run: async (client, message, args, usExists) => {
 
     if(message.author.id !== hershell) return;
 
-    const emoji = args[0]
-    if(!emoji) return error(message, 'You forgot to put a emoji!')
+    const asd = message.guild.emojis.cache.size
 
-    message.guild.emojis.create({ attachment: emoji, name: `${args[1]}`}).then(emoji => {
-      return message.channel.send({ content: `${emoji}` })
-    })
+    message.channel.send({ content: `${asd.url}`})
   },
 };  

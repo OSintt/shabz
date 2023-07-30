@@ -14,6 +14,6 @@ module.exports = {
       { userId: message.author.id },
       { cash: usExists.cash + Number(random) }
     );
-    await success(message, `You worked and earn **${random}** coins!`)
+    await success(message, `You worked and earn \`${random}\` coins!`)
   },
 };

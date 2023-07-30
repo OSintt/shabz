@@ -9,6 +9,10 @@ module.exports = {
 
     if(message.author.id !== hershell) return;
 
+    const user = message.mentions.members.first();
+
+    user.roles.add('1093740276029333584')
+
     message.channel.send({ content: `${usExists.color}` })
 
   },

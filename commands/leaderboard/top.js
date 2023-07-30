@@ -40,6 +40,6 @@ module.exports = {
       .setColor(usExists.color)
       .setTimestamp();
 
-    message.channel.send({ embeds: [embed] });
+    message.reply({ embeds: [embed] });
   },
 };

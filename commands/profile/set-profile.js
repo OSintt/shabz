@@ -26,7 +26,7 @@ module.exports = {
       usExists.nick = args.slice(1).join(' ')
       await usExists.save();
 
-      message.reply({ content: usExists.nick })
+      message.reply({ content: `${usExists.nick}` })
     } catch(e) {
         return error(message, e.message)
     }

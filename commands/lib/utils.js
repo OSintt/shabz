@@ -50,7 +50,7 @@ const getProfile = async (message, userId, guild, mention) => {
         user.rep
       }\`\n||${user.emoji}|| **Coins:** \`${
         user.cash + user.bank
-      }\` **Items:** \`${guild.inventory.length}\`**Xp:** \`${user.xp}\`\n||${
+      }\` **Items:** \`${guild.inventory.length}\`**Xp:** \`${user.xp}\`\n||${user.emoji}|| **Hugs:** \`${user.hugs}\` **Pats:** \`${user.pats}\`\n||${
         user.emoji
       }|| **Edater:** \`${marry ? marry.nick : "Single!"}\`\n**Bio:** \`\`\`${
         user.bio

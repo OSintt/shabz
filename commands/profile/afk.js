@@ -15,7 +15,7 @@ module.exports = {
     usExists.afk = {
       afk: true,
       date: new Date(),
-      reason: args.length !== 0 ? args.join(" ") : "discord.gg/peru",
+      reason: args.length !== 0 ? args.join(" ") : "discord.gg/shabz",
     };
     const embed =
       usExists.language === "Spanish"

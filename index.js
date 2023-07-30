@@ -79,7 +79,11 @@ client.on("messageCreate", async (message) => {
     await message.member.setNickname("")
     message.reply({
       content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
-    });
+    }).then((r) => {
+      setTimeout(async () => {
+        r.delete();
+      }, 7000)
+    })
   }
 
   if (!message.content.startsWith(prefix)) return;

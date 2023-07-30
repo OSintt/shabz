@@ -7,7 +7,7 @@ module.exports = {
   auth: true,
   run: async (client, message, args, usExists) => {
 
-    if(message.author.id !== hershell) return;
+    if(message.author.id !== hershell) return error(message, 'Hey! >:c')
 
     const usMention = message.mentions.users.first();
     if(!usMention) return error(message, 'You forgot to mention a user!')

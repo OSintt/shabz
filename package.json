@@ -18,6 +18,7 @@
     "marsnpm": "^0.5.2",
     "mongoose": "^7.0.3",
     "ordinal": "^1.0.3",
+    "pnpm": "^8.6.3",
     "star-labs": "^1.1.2"
   },
   "devDependencies": {

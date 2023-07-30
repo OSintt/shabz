@@ -8,7 +8,6 @@ module.exports = {
   auth: true,
   cooldown: 3000,
   run: async (client, message, args, usExists) => {
-    // if (message.author.id !== "982390723716476928") return;
 
     try {
       let mention = message.mentions.members.first();
@@ -53,7 +52,7 @@ module.exports = {
               `Congratulations on the marriage of **${mention.nick}** and **${usExists.nick}**`
             );
             return collector.stop();
-          } else {
+          } else if(collected.content === "no") {
             error(
               message,
               `Well, **${usExists.nick}**... you'll have another chance...`

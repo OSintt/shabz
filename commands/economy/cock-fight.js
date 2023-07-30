@@ -22,11 +22,11 @@ module.exports = {
         usExists.cash = usExists.cash - args[0]
         usExists.hen.hen = false;
         await usExists.save();
-        return error(message, 'You lose coins!')
+        return error(message, `You lose \`${args[0]}\` coins!`)
     } else {
         usExists.cash += args[0]
         await usExists.save();
-        return success(message, 'You won coins!')
+        return success(message, `You won \`${usExists.cash}\` coins!`)
     }
     } catch(e) {
         return error(message, e.message)

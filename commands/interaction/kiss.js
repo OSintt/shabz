@@ -39,9 +39,10 @@ module.exports = {
       embeds: [
         new EmbedBuilder()
           .setDescription(
-            `**${usExists.nick}** kissed **${mention.nick}**\n${usExists.nick} and ${mention.nick} has ${kiss ? kiss.n : 1} kisses in total `
+            `**${usExists.nick}** kissed **${mention.nick}**\n**_${usExists.nick}_** and **_${mention.nick}_** has **_${kiss ? kiss.n : 1}_** kisses in total `
           )
-          .setImage(star.kiss()),
+          .setImage(star.kiss())
+          .setColor(usExists.color),
       ],
     })
   } catch(e) {
