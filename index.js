@@ -35,11 +35,11 @@ client.on("ready", () => {
     status: "dnd",
     game: {
       name: "discord.gg/shabz",
-      type: "WATCHING"
-    }
+      type: "WATCHING",
+    },
   });
 
-  client.channels.cache.get("1093910426024149123").send({ embeds: [ new EmbedBuilder().setDescription("Restarting").setColor(7900386)] })
+  client.channels.cache.get("1093910619318669363").send({ embeds: [ new EmbedBuilder().setDescription("Restarting").setColor(7900386)] })
 });
 
 client.on("messageCreate", async (message) => {
@@ -49,7 +49,6 @@ client.on("messageCreate", async (message) => {
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
   const usExists = await User.findOne({ userId: message.author.id });
-  const mention = message.mentions.members.first();
 
   if (message.mentions.members.first()) {
     const mentioned = await User.findOne({
@@ -63,11 +62,13 @@ client.on("messageCreate", async (message) => {
     }
   }
 
-  const prefix = usExists ? usExists.prefix : '6';
+  const prefix = usExists ? usExists.prefix : "6";
   if (message.content.match(RegMention)) {
     message.reply({
       embeds: [
-      new EmbedBuilder().setDescription(`My prefix is \`${prefix}\``).setColor(1146986),
+        new EmbedBuilder()
+          .setDescription(`My prefix is \`${prefix}\``)
+          .setColor(1146986),
       ],
     });
   }
@@ -87,6 +88,7 @@ client.on("messageCreate", async (message) => {
   }
 
   if (!message.content.startsWith(prefix)) return;
+  if(message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift();
   const cmd = client.commands.get(command);
@@ -111,14 +113,14 @@ client.on("messageCreate", async (message) => {
         xpdown.add(message.author.id);
         setTimeout(() => {
           xpdown.delete(message.author.id);
-        }, 4000); 
+        }, 4000);
       }
     }
     if (cmd.auth && !usExists)
       return error(message, "You are not registered yet!");
     if (cmd.mention && !message.mentions.members.first())
       return error(message, "You forgot to mention an user!");
-    if (cmd.author && mention.id === message.author.id)
+    if (cmd.author && cmd.mention.id === message.author.id)
       return error(message, 'Nope')
     if (cmd.cooldown) {
       if (Time.has(`${cmd.name}${message.author.id}`))
