@@ -6,8 +6,6 @@ module.exports = {
   description: "You forgot to put u nicknamee",
   auth: true,
   cooldown: 3000,
-  run: async (client, message, args, usExists) => 
-
-	message.reply({ content: `${client.ws.ping}`})
-  ,
-};  
+  run: async (client, message, args, usExists) =>
+    message.reply({ content: `${client.ws.ping}` }),
+};

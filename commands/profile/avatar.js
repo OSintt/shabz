@@ -8,15 +8,18 @@ module.exports = {
   cooldown: 3000,
   run: async (client, message, args, usExists, guild) => {
     try {
-    const usAvatar = message.attachments.first();
-    if (!usAvatar) return error(message, "You forgot to put your new avatar!");
-    usExists.avatar = usAvatar.url;
-    await usExists.save();
-    await message.reply({
-      embeds: [await getProfile(message, usExists.userId, guild)],
-    })
-    } catch(e) {
-      return error(message, e.message)
+      const usAvatar = message.attachments.first();
+      if (!usAvatar)
+        return error(message, "You forgot to put your new avatar!");
+      usExists.avatar = usAvatar.url;
+      await usExists.save();
+      await message.reply({
+        embeds: [await getProfile(message, usExists.userId, guild)],
+      });
+    } catch (e) {
+      return error(message, e.message);
     }
   },
 };
+
+// usAvatar

@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   avatar: String,
   prefix: {
     type: String,
-    default: '6'
+    default: "6",
   },
   color: {
     type: Number,
@@ -18,8 +18,17 @@ const UserSchema = new Schema({
   },
   marry: {
     userId: String,
+    nick: String,
     is: Boolean,
-    date: Date
+    date: Date,
+  },
+  slots: {
+    type: Number,
+    default: 0,
+  },
+  slotsMax: {
+    type: Number,
+    default: 1,
   },
   bio: {
     type: String,
@@ -42,6 +51,19 @@ const UserSchema = new Schema({
     type: Number,
     default: 0,
   },
+  items: [
+    {
+      name: String,
+      itemId: String,
+      price: Number,
+      description: String,
+      emoji: String,
+      owned: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  ],
   servers: [
     {
       server: {
@@ -52,11 +74,10 @@ const UserSchema = new Schema({
         {
           type: Types.ObjectId,
           ref: "Item",
-          default: []
+          default: [],
         },
       ],
     },
-    
   ],
   hugs: {
     type: Number,
@@ -66,15 +87,24 @@ const UserSchema = new Schema({
     type: Number,
     default: 0,
   },
-  slots: {
-    type: Number,
-    default: 1,
-  },
+  married: [
+    {
+      userId: String,
+      nick: String,
+      date: Date,
+    },
+  ],
   kisses: [
     {
-        userId: String,
-        n: Number
-    }
+      userId: String,
+      n: Number,
+    },
+  ],
+  blockeds: [
+    {
+      userId: String,
+      nick: String,
+    },
   ],
   afk: {
     afk: {
@@ -86,13 +116,13 @@ const UserSchema = new Schema({
   },
   birthday: {
     type: Date,
-    default: new Date()
+    default: new Date(),
   },
   hen: {
     hen: {
-        type: Boolean,
-        default: false,
-    }
-  }
+      type: Boolean,
+      default: false,
+    },
+  },
 });
 module.exports = model("User", UserSchema);

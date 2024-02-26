@@ -11,14 +11,21 @@ module.exports = {
 
     try {
       let mention = message.mentions.members.first();
-      if (usExists.marry.is) return error(message, "You already married!");
       if (!mention) return error(message, "You forgot to mention an user!");
+      if (usExists.slots === usExists.slotsMax) return error(message, "You already married!");
 
       mention = await User.findOne({ userId: mention.id });
       if (!mention) return error(message, "Try 6register!");
-      if (mention.id === message.author.id) return error(message, "Nope");
-      if (mention.marry.is)
+      if (message.mentions.members.first().id === message.author.id) return error(message, "Nope");
+      if (mention.slots === mention.slotsMax)
         return error(message, "This user is already married!");
+
+        const usMarry = usExists.married.find((m) => m.userId === mention.userId)
+        if(usMarry)
+        return error(message, 'You are already married to this user!')
+
+        const search = mention.blockeds.find((b) => b.userId === usExists.userId)
+        if(search) return error(message, 'This user has blocked you')
 
       success(
         message,
@@ -34,16 +41,18 @@ module.exports = {
       collector.on("collect", async (collected) => {
         if (collected.author.id === mention.userId) {
           if (collected.content === "yes") {
-            mention.marry = {
-              is: true,
-              date: new Date(),
-              userId: usExists.userId,
-            };
-            usExists.marry = {
-              is: true,
-              date: new Date(),
+            usExists.married.push({
               userId: mention.userId,
-            };
+              nick: mention.nick,
+              date: new Date(),
+            });
+            mention.married.push({
+              userId: usExists.userId,
+              nick: usExists.nick,
+              date: new Date(),
+            });
+            mention.slots += 1;
+            usExists.slots += 1;
             await mention.save();
             await usExists.save();
 

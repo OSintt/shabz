@@ -15,7 +15,7 @@ module.exports = {
       cash: async () => (data = await User.find().sort({ cash: -1 })),
       pija: async () => (data = await User.find().sort({ pija: -1 })),
       bank: async () => (data = await User.find().sort({ bank: -1 })),
-      edater: async () => (data = await User.find().sort({ marry: -1})),
+      edater: async () => (data = await User.find().sort({ marry: -1 })),
       def: () => (data = null),
     };
     await (getTop[args] || getTop["def"])();
@@ -25,14 +25,15 @@ module.exports = {
         "__**Usage:**__:\n`6top <xp | rep | cash | bank | pija>`"
       );
     data = data.slice(0, 10);
-    const top = data
-      .map(
-        (u, i) =>
-          `${usExists.emoji} **${i + 1}** • ${u.nick} | **${args}**: \`${
-            u[args]
-          }\``
-      )
-      .join("\n") || "Nope"
+    const top =
+      data
+        .map(
+          (u, i) =>
+            `${usExists.emoji} **${i + 1}** • ${u.nick} | **${args}**: \`${
+              u[args]
+            }\``
+        )
+        .join("\n") || "Nope";
 
     const embed = new EmbedBuilder()
       .setTitle(`Users top in ${args}!`)

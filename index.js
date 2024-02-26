@@ -1,10 +1,16 @@
-const { Client, EmbedBuilder, Collection } = require("discord.js");
+const {
+  Client,
+  EmbedBuilder,
+  Collection,
+  InteractionCollector,
+} = require("discord.js");
 const { config } = require("dotenv");
 const Discord = require("discord.js");
 const client = new Client({ intents: [3276799] });
 const fs = require("fs");
 const ms = require("ms");
-const dayjs = require("dayjs")
+const Duration = require("humanize-duration");
+const dayjs = require("dayjs");
 const xpdown = new Set();
 
 const Time = new Discord.Collection();
@@ -39,15 +45,15 @@ client.on("ready", () => {
     },
   });
 
-  client.channels.cache.get("1093910619318669363").send({ embeds: [ new EmbedBuilder().setDescription("Restarting").setColor(7900386)] })
+  // client.channels.cache.get("1093910619318669363").send({ embeds: [ new EmbedBuilder().setDescription("6register").setColor(7900386)] })
 });
 
 client.on("messageCreate", async (message) => {
-
-  if(message.author.bot) return;
+  if (message.author.bot) return;
 
   let RegMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
+  let mentions = message.mentions.members.first();
   const usExists = await User.findOne({ userId: message.author.id });
 
   if (message.mentions.members.first()) {
@@ -56,7 +62,9 @@ client.on("messageCreate", async (message) => {
     });
     if (mentioned && mentioned.afk.afk) {
       const embed = new EmbedBuilder().setDescription(
-        `**${mentioned.nick}** is currently AFK!\n**Reason:** ${mentioned.afk.reason}\n**Date:** ${dayjs(mentioned.afk.date).format("h:mma")}`
+        `**${mentioned.nick}** is currently AFK!\n**Reason:** ${
+          mentioned.afk.reason
+        }\n**Date:** ${dayjs(mentioned.afk.date).format("h:mma")}`
       );
       await message.reply({ embeds: [embed] });
     }
@@ -73,26 +81,28 @@ client.on("messageCreate", async (message) => {
     });
   }
 
-        
   if (usExists && usExists.afk.afk) {
     usExists.afk.afk = false;
     await usExists.save();
-    await message.member.setNickname("")
-    message.reply({
-      content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
-    }).then((r) => {
-      setTimeout(async () => {
-        r.delete();
-      }, 7000)
-    })
+    // await message.member.setNickname("")
+    message
+      .reply({
+        content: `Welcome back **${message.author.tag}**, ur AFK status has been removed!`,
+      })
+      .then((r) => {
+        setTimeout(async () => {
+          r.delete();
+        }, 7000);
+      });
   }
 
   if (!message.content.startsWith(prefix)) return;
-  if(message.author.bot) return;
+  if (message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift();
   const cmd = client.commands.get(command);
   let guild;
+
   if (cmd) {
     if (usExists) {
       const server = await Server.findOne({ guildId: message.guild.id });
@@ -120,8 +130,8 @@ client.on("messageCreate", async (message) => {
       return error(message, "You are not registered yet!");
     if (cmd.mention && !message.mentions.members.first())
       return error(message, "You forgot to mention an user!");
-    if (cmd.author && cmd.mention.id === message.author.id)
-      return error(message, 'Nope')
+    // if (cmd.author && message.mentions.members.first().id === message.author.id)
+    //   return error(message, "Nope");
     if (cmd.cooldown) {
       if (Time.has(`${cmd.name}${message.author.id}`))
         return error(
